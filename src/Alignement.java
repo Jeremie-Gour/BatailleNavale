@@ -1,4 +1,4 @@
 public enum Alignement {
     HORIZONTAL,
-    VERTICAL;
+    VERTICAL
 }

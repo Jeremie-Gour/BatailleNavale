@@ -12,7 +12,7 @@ public enum Colonne {
 
     private int colonne;
 
-    private Colonne(int _colonne) {
+    Colonne(int _colonne) {
         this.colonne = _colonne;
     }
 
