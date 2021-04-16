@@ -20,12 +20,14 @@ public class Partie {
         TypeCellule tirOrdinateur;
 
         // Place
-        oceanHumain.placerNavires();
-        oceanOrdinateur.placerNavires();
+//        oceanHumain.placerNavires();
+//        oceanOrdinateur.placerNavires();
+//
+//
+//        oceanHumain.placerBombes();
+//        oceanOrdinateur.placerBombes();
+        oceanHumain.placerNaviresAleatoirement();
 
-
-        oceanHumain.placerBombes();
-        oceanOrdinateur.placerBombes();
 
         int cellulesRestantesPourHumain = calculerNombreTirsRestants(oceanOrdinateur);
         int cellulesRestantesPourOrdinateur = calculerNombreTirsRestants(oceanHumain);
@@ -33,22 +35,23 @@ public class Partie {
         // Boucle principale de jeu
         // Alterne de joueur en joueur jusqu'a temps qu'il y n'y a pas de gagnant
 
-        while (cellulesRestantesPourHumain > 0 && cellulesRestantesPourOrdinateur > 0){
-
-            do {
-                tirHumain = oceanOrdinateur.tirer();
-            } while ( !Validateur.estTirValide(tirHumain));
-            cellulesRestantesPourHumain--;
-
-            if(cellulesRestantesPourHumain > 0) {
-                do {
-                    tirOrdinateur = oceanOrdinateur.tirer();
-                } while (!Validateur.estTirValide(tirOrdinateur));
-                cellulesRestantesPourOrdinateur--;
-            }
-        }
+//        while (cellulesRestantesPourHumain > 0 && cellulesRestantesPourOrdinateur > 0){
+//
+//            do {
+//                tirHumain = oceanOrdinateur.tirer();
+//            } while ( !Validateur.estTirValide(tirHumain));
+//            cellulesRestantesPourHumain--;
+//
+//            if(cellulesRestantesPourHumain > 0) {
+//                do {
+//                    tirOrdinateur = oceanOrdinateur.tirer();
+//                } while (!Validateur.estTirValide(tirOrdinateur));
+//                cellulesRestantesPourOrdinateur--;
+//            }
+//        }
 
         Affichage.afficherGagnant(cellulesRestantesPourHumain,cellulesRestantesPourOrdinateur);
+
     }
 
 

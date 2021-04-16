@@ -1,7 +1,7 @@
 public enum TypeNavire {
-    PORTEAVIONS(1),
-    CROISEUR(3),
-    CONTRETORPILLEUR(5),
+    PORTEAVIONS(5),
+    CROISEUR(4),
+    CONTRETORPILLEUR(3),
     TORPILLEUR(2);
 
     private int taille;
