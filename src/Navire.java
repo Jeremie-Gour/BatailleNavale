@@ -1,3 +1,6 @@
+/**
+ * Cette classe représente un objet de type Navire.
+ */
 public class Navire {
     private TypeNavire typeNavire;
     private Coordonnee[] positions;

@@ -1,3 +1,6 @@
+/**
+ * Cette énumération énumère les différentes colonnes de la grille de jeu.
+ */
 public enum Colonne {
     A(0),
     B(1),
@@ -12,8 +15,8 @@ public enum Colonne {
 
     private int colonne;
 
-    private Colonne(int _colonne) {
-        this.colonne = _colonne;
+    Colonne(int colonne) {
+        this.colonne = colonne;
     }
 
     public int getColonne() {

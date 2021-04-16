@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * Cette classe contient toutes les méthodes de saisie et de validation.
+ */
 public class Affichage {
     private int minimum = 1;
     private int maximum = 10;
@@ -64,8 +67,8 @@ public class Affichage {
         return colonne.getColonne();
     }
 
-    public static void afficherGagnant(int cellulesRestantesPourHumain, int cellulesRestantesPourOrdinateur) {
-        if (cellulesRestantesPourHumain == 0) {
+    public static void afficherGagnant(boolean humainGagnant, boolean ordinateurGagnant) {
+        if (!humainGagnant) {
             System.out.println("Le joueur a remporté la partie!\n");
         } else {
             System.out.println("L'ordinateur a remporté la partie!\n");

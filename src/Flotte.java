@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Cette classe contient tous les différents navires qui constituent une flotte.
+ */
 public class Flotte {
     List<Navire> listeNavires = new ArrayList<>();
 

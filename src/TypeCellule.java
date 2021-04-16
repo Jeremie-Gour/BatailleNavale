@@ -4,10 +4,10 @@ public enum TypeCellule {
     NAVIRECOULE('#'),
     NAVIRERATE('x'),
     EAU('~'),
-    BOMBE('!'),
-    ;
+    BOMBE('!');
 
     private final char icone;
+    private boolean tiree;
 
     TypeCellule(char icone) {
         this.icone = icone;
@@ -15,5 +15,13 @@ public enum TypeCellule {
 
     public char getIcone() {
         return icone;
+    }
+
+    public void setTiree(boolean tiree) {
+        this.tiree = tiree;
+    }
+
+    public boolean isTiree() {
+        return tiree;
     }
 }

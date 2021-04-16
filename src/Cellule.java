@@ -1,3 +1,6 @@
+/**
+ * Cette classe représente une cellule de la grille de jeu.
+ */
 public class Cellule {
     TypeCellule typeCellule;
 
@@ -5,16 +8,13 @@ public class Cellule {
         this.typeCellule = typeCellule;
     }
 
-    public Cellule(){
-        typeCellule = TypeCellule.EAU;
-    }
-
     /**
      * Indique si une cellule est occupée par un navire.
-     * @return si un bateau occupe la cellule.
+     * @return true si un navire occupe la cellule, false sinon.
      */
     public boolean estOccupeeParNavire(){
-        // La fonction ne fait que checker pour un bateau, faudrait faire plus en détail pour check avec bombe etc aussi.
+        // La fonction ne fait que checker pour un bateau, faudrait faire plus en détails pour check avec bombe etc aussi.
+        // Pour l'instant c'est correct parce que le programme ne tient pas encore compte des tirs.
         return this.typeCellule == TypeCellule.NAVIREINTACT;
     }
 }

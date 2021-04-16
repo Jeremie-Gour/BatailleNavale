@@ -1,3 +1,6 @@
+/**
+ * Cette classe représente une coordonnée sur la grille de jeu.
+ */
 public class Coordonnee {
     private int rangee;
     private int colonne;
