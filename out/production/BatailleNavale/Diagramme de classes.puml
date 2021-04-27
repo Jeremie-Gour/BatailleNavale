@@ -1,0 +1,104 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Affichage{
+}
+
+enum Alignement{
+}
+
+class Cellule{
+}
+
+enum Colonne{
+}
+
+class ContreTorpilleur extends Navire{
+}
+
+class Coordonne{
+}
+
+class Croiseur extends Navire{
+}
+
+enum Difficulte{
+}
+
+class Flotte{
+}
+
+abstract class Joueur{
+}
+
+class JoueurHumain extends Joueur{
+}
+
+class JoueurOrdinateur extends Joueur{
+}
+
+class Navire{
+}
+
+class Ocean{
+}
+
+
+class Partie{
+    -enum TypeJoueur
+}
+
+class PorteAvions extends Navire{
+}
+
+abstract class Navire{
+}
+
+class Ocean{
+}
+
+class Partie{
+}
+
+class PorteAvions extends Navire{
+}
+
+class Torpilleur extends Navire{
+}
+
+enum TypeCellule{
+}
+
+
+
+enum TypeNavire{
+}
+
+Partie -- Affichage
+
+Partie -- Ocean
+
+Partie -- Joueur
+
+
+Flotte -- Navire
+
+Ocean -- TypeCellule
+
+Ocean -- Colonne
+
+Ocean -- Cellule
+
+Cellule -- Coordonne
+
+Ocean -- Navire
+
+
+Partie -- Difficulte
+
+Navire -- TypeNavire
+
+
+
+Navire *-- Alignement
+@enduml
