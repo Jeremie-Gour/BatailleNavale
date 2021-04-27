@@ -1,6 +1,8 @@
 import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
+import java.util.List;
 
 /**
  * Cette classe représente un océan sous la forme d'une matrice de jeu.
@@ -13,7 +15,10 @@ public class Ocean {
     int cellulesTotales = TAILLE_HORIZONTALE_MAX * TAILLE_VERTICALE_MAX;
     int cellulesOccupeesParBateau = 0;
     int cellulesDeNavireIntactes = calculerNombreTirsRestants();
-    Set<Coordonnee> ce = new HashSet<>();
+
+
+
+
 
     private Cellule[][] ocean;
 
@@ -30,12 +35,16 @@ public class Ocean {
             }
         }
     }
+    /*
+
+
+
+     */
 
     /**
      * Affiche la grille de jeu.
      */
     public void afficherOcean() {
-
         System.out.println();
         for (int h = 0; h < TAILLE_HORIZONTALE_MAX; h++) {
             System.out.print(h + " ");
@@ -241,7 +250,7 @@ public class Ocean {
      * @param coordonnee La coordonnée de la cellule à tirer.
      * @return le type de la cellule qui a été tirée.
      */
-    public TypeCellule tirer(Coordonnee coordonnee) {
+    public TypeCellule tirerOrdinateur(Coordonnee coordonnee) {
         TypeCellule typeCellule = TypeCellule.EAU;
 
         if (ocean[coordonnee.getRangee()][coordonnee.getColonne()].typeCellule == TypeCellule.EAU) {
@@ -284,69 +293,8 @@ public class Ocean {
         ocean[coordonneeTir1.getRangee()][coordonneeTir1.getColonne()].typeCellule = TypeCellule.BOMBE;
     }
 
-    /**
-     * Tire une cellule sur la grille de jeu.
-     * @param difficulte Le niveau de difficulté du tir effectué par l'ordinateur
-     * @return true si il reste des cellules occupées par un navire et qui n'ont pas déjà été tirées.
-     */
-    public boolean tirerOrdinateur(Difficulte difficulte) {
-        boolean tir = false;
-        if (difficulte == Difficulte.FACILE) {
-            tir = tirerOrdinateurFacile();
-        } else if (difficulte == Difficulte.INTERMEDIAIRE) {
-            tir = tirerOrdinateurIntermediaire();
-        } else if (difficulte == Difficulte.DIFFICILE) {
-            tir = tirerOrdinateurDifficile();
-        }
-        return tir;
-    }
 
-    private boolean tirerOrdinateurDifficile() {
-        boolean tir = false;
-        return tir;
-    }
-
-
-    private boolean tirerOrdinateurIntermediaire() {
-        Random random = new Random();
-        int rangee = random.nextInt((10));
-        int colonne = random.nextInt((10));
-        Coordonnee coordonnee = new Coordonnee(rangee, colonne);
-
-        // Ici, on a plusieurs choix de design d'algorithme:
-
-        // Si la coordonne a deja ete prise, on en prend une autre
-        // On pourrait en générer aléatoirement une nouvelle à chaque fois,
-        // OU on pourrait avoir un Set/ensemble de coordonnées ou cellules uniques.
-        // On pourrait prendre aléatoirement une coordonnée dans cet ensemble et la retirer de l'ensemble
-        // Après, on pourrait repiger la prochaine coordonnée au lieu de toujours générer et d'aller checker dans la grille
-
-
-        // Ensuite, il faut trouver comment on décide de tirer sur le même bateau.
-        // Les TypeCellules de chacune des cellules de la grille devraient être utiles pour déterminer cela.
-
-        // Il faut évidemment toujours vérifier si on n'est pas en train de tirer en dehors de la grille.
-
-        if (ocean[rangee][colonne].typeCellule.isTiree()) {
-
-        }
-
-
-
-        return cellulesDeNavireIntactes > 0;
-    }
-
-    /**
-     * Effectue un tir aléatoire sur l'océan. Peut tirer au même endroit.
-     *
-     * @return le résultat du tir.
-     */
-    private boolean tirerOrdinateurFacile() {
-        Random random = new Random();
-        int rangee = random.nextInt((10));
-        int colonne = random.nextInt((10));
-        Coordonnee coordonnee = new Coordonnee(rangee, colonne);
-        tirer(coordonnee);
+    public boolean celluleDeNavireIntactesDispo(){
         return cellulesDeNavireIntactes > 0;
     }
 
