@@ -4,6 +4,7 @@
 public class Navire {
     private TypeNavire typeNavire;
     private Coordonnee[] positions;
+    private Alignement alignement;
 
     public Navire(TypeNavire typeNavire) {
         this.typeNavire = typeNavire;
