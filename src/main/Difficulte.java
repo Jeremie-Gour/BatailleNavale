@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Cette énumération contient les différents niveaux de difficultés de l'ordinateur.
  */

@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Cette classe représente une coordonnée sur la grille de jeu.
  */

@@ -1,3 +1,5 @@
+package main;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,16 +14,16 @@ public class Ordinateur {
     si l'ordinateur est facile ou intermediaire. Ca cause aussi de la repetition.
 
     */
-    private static final int[] probabilite = {0,1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,6,6,6,6,7,7,7,8,8,9};
-    static private int nbrChiffreEchecMat = (TAILLE_HORIZONTALE_MAX * TAILLE_VERTICALE_MAX)/2; //change ca pour une methode
+    private static final int[] probabilite = {0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9};
+    static private int nbrChiffreEchecMat = (TAILLE_HORIZONTALE_MAX * TAILLE_VERTICALE_MAX) / 2; //change ca pour une methode
     private List<ArrayList<Coordonnee>> coordonneesPossiblesIntelligent;
     //-------------------------------------------------------------------------------------------
 
 
-
-    protected enum Strategie{
+    protected enum Strategie {
         RECHERCHERBATEAU, CHERCHERALIGNEMENT, SUIVREALIGNEMENT, VERIFIERAUTREBOUT
     }
+
     private Strategie strategie;
     private Difficulte difficulte;
     private List<ArrayList<Coordonnee>> coordonneesPossibles;
@@ -35,12 +37,10 @@ public class Ordinateur {
     static private Coordonnee coordonneePivot;//utiliser comme coordonne milleu pour verifier les coordonnés aux alentours
 
 
-
-
-    public Ordinateur(Difficulte difficulte){
+    public Ordinateur(Difficulte difficulte) {
         coordonneesPossibles = new ArrayList<ArrayList<Coordonnee>>();
         this.difficulte = difficulte;
-        if(difficulte == Difficulte.DIFFICILE){
+        if (difficulte == Difficulte.DIFFICILE) {
             coordonneesPossiblesIntelligent = new ArrayList<ArrayList<Coordonnee>>();
             Random random = new Random();
             int chiffreEchec = random.nextInt(2);
@@ -50,11 +50,11 @@ public class Ordinateur {
             for (int h = 0; h < TAILLE_HORIZONTALE_MAX; h++) {
                 this.coordonneesPossibles.add(new ArrayList<>());
                 this.coordonneesPossiblesIntelligent.add(new ArrayList<>());
-                for (int v = 0; v < TAILLE_VERTICALE_MAX/2; v++) {
-                    for(int j = 0; j < (nombreRange + nombreColonne +1);j++){
+                for (int v = 0; v < TAILLE_VERTICALE_MAX / 2; v++) {
+                    for (int j = 0; j < (nombreRange + nombreColonne + 1); j++) {
                         this.coordonneesPossibles.get(h).add(new Coordonnee(h, v));
                         diffference = Math.abs(h - v);
-                        if(diffference % 2 == chiffreEchec){
+                        if (diffference % 2 == chiffreEchec) {
                             this.coordonneesPossiblesIntelligent.get(h).add(new Coordonnee(h, v));
                         }
                     }
@@ -68,12 +68,12 @@ public class Ordinateur {
             for (int h = 0; h < TAILLE_HORIZONTALE_MAX; h++) {
                 this.coordonneesPossibles.add(new ArrayList<>());
                 this.coordonneesPossiblesIntelligent.add(new ArrayList<>());
-                for (int v = TAILLE_VERTICALE_MAX/2; v < TAILLE_VERTICALE_MAX; v++) {
-                    for(int j = 0; j < (nombreRange + nombreColonne + 1);j++){
+                for (int v = TAILLE_VERTICALE_MAX / 2; v < TAILLE_VERTICALE_MAX; v++) {
+                    for (int j = 0; j < (nombreRange + nombreColonne + 1); j++) {
 
                         this.coordonneesPossibles.get(h).add(new Coordonnee(h, v));
                         diffference = Math.abs(h - v);
-                        if((diffference % 2) == chiffreEchec){
+                        if ((diffference % 2) == chiffreEchec) {
 
                             this.coordonneesPossiblesIntelligent.get(h).add(new Coordonnee(h, v));
                         }
@@ -84,7 +84,7 @@ public class Ordinateur {
 
                 nombreRange--;
             }
-        }else{
+        } else {
             for (int h = 0; h < TAILLE_HORIZONTALE_MAX; h++) {
                 this.coordonneesPossibles.add(new ArrayList<>());
                 for (int v = 0; v < TAILLE_VERTICALE_MAX; v++) {
@@ -97,44 +97,45 @@ public class Ordinateur {
         this.strategie = Strategie.RECHERCHERBATEAU;
     }
 
-    public Coordonnee prochaineAttaque(){
-        if(this.difficulte == Difficulte.FACILE){
+    public Coordonnee prochaineAttaque() {
+        if (this.difficulte == Difficulte.FACILE) {
             return attaquerFacile();
-        }else if(this.difficulte == Difficulte.INTERMEDIAIRE){
+        } else if (this.difficulte == Difficulte.INTERMEDIAIRE) {
             return attaquerIntermediaire();
-        }else if(this.difficulte == Difficulte.DIFFICILE){
+        } else if (this.difficulte == Difficulte.DIFFICILE) {
             return attaquerDifficile();
         }
-        return new Coordonnee(2,2);
+        return new Coordonnee(2, 2);
 
     }
-/*
-    private Cellule attaqueDifficile() {
-    }
 
-    protected abstract Cellule attaqueIntermediaire();
-*/
-    private Coordonnee attaquerFacile(){
+    /*
+        private Cellule attaqueDifficile() {
+        }
+
+        protected abstract Cellule attaqueIntermediaire();
+    */
+    private Coordonnee attaquerFacile() {
         System.out.println("-----------facile--------------");
         return choisirCoordonneAleatoire();
     }
 
-    private Coordonnee attaquerIntermediaire(){
+    private Coordonnee attaquerIntermediaire() {
         System.out.println("-----------intermediaire--------------");
         Coordonnee coordonneCible;
-        if(this.strategie == Strategie.RECHERCHERBATEAU){
-            coordonneCible =  choisirCoordonneAleatoire();
+        if (this.strategie == Strategie.RECHERCHERBATEAU) {
+            coordonneCible = choisirCoordonneAleatoire();
             retirerCoordonnePossible(coordonneCible);
             return coordonneCible;
-        }else if(this.strategie == Strategie.CHERCHERALIGNEMENT){
+        } else if (this.strategie == Strategie.CHERCHERALIGNEMENT) {
             coordonneCible = rechercherAlignement();
             retirerCoordonnePossible(coordonneCible);
             return coordonneCible;
-        }else if(this.strategie == Strategie.SUIVREALIGNEMENT){
+        } else if (this.strategie == Strategie.SUIVREALIGNEMENT) {
             coordonneCible = suivreAlignement();
             retirerCoordonnePossible(coordonneCible);
             return coordonneCible;
-        }else if(this.strategie == Strategie.VERIFIERAUTREBOUT){
+        } else if (this.strategie == Strategie.VERIFIERAUTREBOUT) {
             coordonneCible = suivreAlignementAutreBout();
             retirerCoordonnePossible(coordonneCible);
             return coordonneCible;
@@ -142,22 +143,22 @@ public class Ordinateur {
         return choisirCoordonneAleatoire();
     }
 
-    private Coordonnee attaquerDifficile(){
+    private Coordonnee attaquerDifficile() {
         System.out.println("-----------difficilce--------------");
         Coordonnee coordonneCible;
-        if(this.strategie == Strategie.RECHERCHERBATEAU){
-            coordonneCible =  choisirCoordonneAleatoireIntelligent();
+        if (this.strategie == Strategie.RECHERCHERBATEAU) {
+            coordonneCible = choisirCoordonneAleatoireIntelligent();
             retirerCoordonnePossibleIntel(coordonneCible);
             return coordonneCible;
-        }else if(this.strategie == Strategie.CHERCHERALIGNEMENT){
+        } else if (this.strategie == Strategie.CHERCHERALIGNEMENT) {
             coordonneCible = rechercherAlignement();
             retirerCoordonnePossibleIntel(coordonneCible);
             return coordonneCible;
-        }else if(this.strategie == Strategie.SUIVREALIGNEMENT){
+        } else if (this.strategie == Strategie.SUIVREALIGNEMENT) {
             coordonneCible = suivreAlignement();
             retirerCoordonnePossibleIntel(coordonneCible);
             return coordonneCible;
-        }else if(this.strategie == Strategie.VERIFIERAUTREBOUT){
+        } else if (this.strategie == Strategie.VERIFIERAUTREBOUT) {
             coordonneCible = suivreAlignementAutreBout();
             retirerCoordonnePossibleIntel(coordonneCible);
             return coordonneCible;
@@ -166,24 +167,24 @@ public class Ordinateur {
     }
 
     private Coordonnee suivreAlignement() {
-        Coordonnee coordonnePossible= new Coordonnee(this.derniereCoordonneAttaque.getRangee() ,this.derniereCoordonneAttaque.getColonne());
-        if(alignementRepere == Alignement.VERTICAL){
+        Coordonnee coordonnePossible = new Coordonnee(this.derniereCoordonneAttaque.getRangee(), this.derniereCoordonneAttaque.getColonne());
+        if (alignementRepere == Alignement.VERTICAL) {
             coordonnePossible.deplacerADroite();
-            if(coordonnePossible.getColonne() < TAILLE_VERTICALE_MAX && coordonneEstDisponible(coordonnePossible)){
-                    pas++;
-                    this.derniereCoordonneAttaque = coordonnePossible;
-                    return coordonnePossible;
-            }else{
-                this.strategie = Strategie.VERIFIERAUTREBOUT;
-                return suivreAlignementAutreBout();
-            }
-        }else if(alignementRepere == Alignement.HORIZONTAL){
-            coordonnePossible.deplacerEnHaut();
-            if(coordonnePossible.getColonne() < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible(coordonnePossible)){
+            if (coordonnePossible.getColonne() < TAILLE_VERTICALE_MAX && coordonneEstDisponible(coordonnePossible)) {
                 pas++;
                 this.derniereCoordonneAttaque = coordonnePossible;
                 return coordonnePossible;
-            }else{
+            } else {
+                this.strategie = Strategie.VERIFIERAUTREBOUT;
+                return suivreAlignementAutreBout();
+            }
+        } else if (alignementRepere == Alignement.HORIZONTAL) {
+            coordonnePossible.deplacerEnHaut();
+            if (coordonnePossible.getColonne() < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible(coordonnePossible)) {
+                pas++;
+                this.derniereCoordonneAttaque = coordonnePossible;
+                return coordonnePossible;
+            } else {
                 this.strategie = Strategie.VERIFIERAUTREBOUT;
                 return suivreAlignementAutreBout();
             }
@@ -193,21 +194,21 @@ public class Ordinateur {
     }
 
     private Coordonnee suivreAlignementAutreBout() {
-        Coordonnee coordonnePossible= new Coordonnee(this.derniereCoordonneAttaque.getRangee() ,this.derniereCoordonneAttaque.getColonne());
-        if(alignementRepere == Alignement.VERTICAL){
+        Coordonnee coordonnePossible = new Coordonnee(this.derniereCoordonneAttaque.getRangee(), this.derniereCoordonneAttaque.getColonne());
+        if (alignementRepere == Alignement.VERTICAL) {
             coordonnePossible.deplacerAGauche(pas);
-            if(coordonnePossible.getColonne() >= 0 && coordonneEstDisponible(coordonnePossible)){
+            if (coordonnePossible.getColonne() >= 0 && coordonneEstDisponible(coordonnePossible)) {
                 this.derniereCoordonneAttaque = coordonnePossible;
-                if( pas != 1){
+                if (pas != 1) {
                     pas = 1;
                 }
                 return coordonnePossible;
             }
-        }else if(alignementRepere == Alignement.HORIZONTAL){
+        } else if (alignementRepere == Alignement.HORIZONTAL) {
             coordonnePossible.deplacerEnBas(pas);
-            if(coordonnePossible.getRangee() >= 0 && coordonneEstDisponible(coordonnePossible)){
+            if (coordonnePossible.getRangee() >= 0 && coordonneEstDisponible(coordonnePossible)) {
 
-                if( pas != 1){
+                if (pas != 1) {
                     pas = 1;
                 }
                 this.derniereCoordonneAttaque = coordonnePossible;
@@ -221,21 +222,21 @@ public class Ordinateur {
 
 
     private Coordonnee rechercherAlignement() {
-        Coordonnee coordonnePossible= new Coordonnee(coordonneePivot.getRangee() + 1, coordonneePivot.getColonne());
-        if((coordonnePossible.getRangee()) < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible(coordonnePossible)){
+        Coordonnee coordonnePossible = new Coordonnee(coordonneePivot.getRangee() + 1, coordonneePivot.getColonne());
+        if ((coordonnePossible.getRangee()) < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible(coordonnePossible)) {
             alignementRepere = Alignement.HORIZONTAL;
             pas = 2;
             this.derniereCoordonneAttaque = coordonnePossible;
             return coordonnePossible;
-        }else{
+        } else {
             coordonnePossible.deplacerEnBas(2);
         }
-        if((coordonnePossible.getRangee()) >= 0 && coordonneEstDisponible(coordonnePossible)) {
+        if ((coordonnePossible.getRangee()) >= 0 && coordonneEstDisponible(coordonnePossible)) {
             alignementRepere = Alignement.HORIZONTAL;
             pas = 1;
             this.derniereCoordonneAttaque = coordonnePossible;
             return coordonnePossible;
-        }else{
+        } else {
             coordonnePossible.deplacerEnHaut();
             coordonnePossible.deplacerADroite();
         }
@@ -244,7 +245,7 @@ public class Ordinateur {
             pas = 2;
             this.derniereCoordonneAttaque = coordonnePossible;
             return coordonnePossible;
-        }else{
+        } else {
             coordonnePossible.deplacerAGauche(2);
         }
         if (coordonnePossible.getColonne() >= 0 && coordonneEstDisponible(coordonnePossible)) {
@@ -258,10 +259,10 @@ public class Ordinateur {
     }
 
 
-    private Coordonnee choisirCoordonneAleatoire(){
+    private Coordonnee choisirCoordonneAleatoire() {
         Random random = new Random();
         int rangee = random.nextInt(this.coordonneesPossibles.size());
-        while(this.coordonneesPossibles.get(rangee).size() == 0){
+        while (this.coordonneesPossibles.get(rangee).size() == 0) {
             rangee = random.nextInt(this.coordonneesPossibles.size());
         }
         int colonne = random.nextInt(this.coordonneesPossibles.get(rangee).size());
@@ -270,12 +271,12 @@ public class Ordinateur {
         return coordonneeCible;
     }
 
-    private Coordonnee choisirCoordonneAleatoireIntelligent(){
+    private Coordonnee choisirCoordonneAleatoireIntelligent() {
         Random random = new Random();
 
-        if(nbrChiffreEchecMat > 0){
+        if (nbrChiffreEchecMat > 0) {
             int rangee = probabilite[random.nextInt(probabilite.length)];
-            while(this.coordonneesPossiblesIntelligent.get(rangee).size() == 0){
+            while (this.coordonneesPossiblesIntelligent.get(rangee).size() == 0) {
                 rangee = probabilite[random.nextInt(probabilite.length)];
             }
 
@@ -283,9 +284,9 @@ public class Ordinateur {
             Coordonnee coordonneeCible = this.coordonneesPossiblesIntelligent.get(rangee).get(colonne);
             derniereCoordonneAttaque = new Coordonnee(coordonneeCible.getRangee(), coordonneeCible.getColonne());
             return coordonneeCible;
-        }else{
+        } else {
             int rangee = probabilite[random.nextInt(probabilite.length)];
-            while(this.coordonneesPossibles.get(rangee).size() == 0){
+            while (this.coordonneesPossibles.get(rangee).size() == 0) {
                 rangee = probabilite[random.nextInt(probabilite.length)];
             }
             int colonne = random.nextInt(this.coordonneesPossibles.get(rangee).size());
@@ -297,93 +298,90 @@ public class Ordinateur {
     }
 
 
-
-    private boolean coordonneEstDisponible(Coordonnee coordonne){
+    private boolean coordonneEstDisponible(Coordonnee coordonne) {
         return this.coordonneesPossibles.get(coordonne.getRangee()).contains(coordonne);
     }
 
-    private void retirerCoordonnePossible(Coordonnee coordonne){
+    private void retirerCoordonnePossible(Coordonnee coordonne) {
         int celluleRetireIndex = this.coordonneesPossibles.get(coordonne.getRangee()).indexOf(coordonne);
         this.coordonneesPossibles.get(coordonne.getRangee()).remove(celluleRetireIndex);
     }
 
-    private void retirerCoordonnePossibleIntel(Coordonnee coordonne){
+    private void retirerCoordonnePossibleIntel(Coordonnee coordonne) {
         int celluleRetireIndex;
         this.coordonneesPossibles.get(coordonne.getRangee()).removeIf(n -> (n.equals(coordonne)));
         celluleRetireIndex = this.coordonneesPossiblesIntelligent.get(coordonne.getRangee()).indexOf(coordonne);
-        if(celluleRetireIndex != -1){
+        if (celluleRetireIndex != -1) {
             this.coordonneesPossiblesIntelligent.get(coordonne.getRangee()).removeIf(n -> (n.equals(coordonne)));
             nbrChiffreEchecMat--;
         }
 
     }
 
-    public void recevoirResultat(TypeCellule celluleTouche){
-        if(this.difficulte == Difficulte.INTERMEDIAIRE){
+    public void recevoirResultat(TypeCellule celluleTouche) {
+        if (this.difficulte == Difficulte.INTERMEDIAIRE) {
             recevoirResultatIntermediaire(celluleTouche);
-        }else if(this.difficulte == Difficulte.DIFFICILE){
+        } else if (this.difficulte == Difficulte.DIFFICILE) {
             recevoirResultatDifficile(celluleTouche);
         }
     }
 
-    public void recevoirResultatIntermediaire(TypeCellule celluleTouche){
-        if(this.strategie == Strategie.RECHERCHERBATEAU){
-            if(celluleTouche == TypeCellule.NAVIREINTACT){
+    public void recevoirResultatIntermediaire(TypeCellule celluleTouche) {
+        if (this.strategie == Strategie.RECHERCHERBATEAU) {
+            if (celluleTouche == TypeCellule.NAVIREINTACT) {
                 coordonneePivot = new Coordonnee(this.derniereCoordonneAttaque.getRangee(), this.derniereCoordonneAttaque.getColonne());
                 this.strategie = Strategie.CHERCHERALIGNEMENT;
             }
-        }else if(this.strategie == Strategie.CHERCHERALIGNEMENT){
-            if(celluleTouche == TypeCellule.NAVIREINTACT){
+        } else if (this.strategie == Strategie.CHERCHERALIGNEMENT) {
+            if (celluleTouche == TypeCellule.NAVIREINTACT) {
                 this.strategie = Strategie.SUIVREALIGNEMENT;
             }
-        }else if(this.strategie == Strategie.SUIVREALIGNEMENT){
-            if(celluleTouche == TypeCellule.EAU){
+        } else if (this.strategie == Strategie.SUIVREALIGNEMENT) {
+            if (celluleTouche == TypeCellule.EAU) {
                 this.strategie = Strategie.VERIFIERAUTREBOUT;
             }
-        }else if(this.strategie == Strategie.VERIFIERAUTREBOUT){
-            if(celluleTouche == TypeCellule.EAU){
+        } else if (this.strategie == Strategie.VERIFIERAUTREBOUT) {
+            if (celluleTouche == TypeCellule.EAU) {
                 this.strategie = Strategie.RECHERCHERBATEAU;
             }
         }
-        if(this.difficulte == Difficulte.INTERMEDIAIRE){
+        if (this.difficulte == Difficulte.INTERMEDIAIRE) {
         }
 
     }
 
-    public void recevoirResultatDifficile(TypeCellule celluleTouche){
+    public void recevoirResultatDifficile(TypeCellule celluleTouche) {
 
-        if(this.strategie == Strategie.RECHERCHERBATEAU){
-            if(celluleTouche == TypeCellule.NAVIREINTACT){
+        if (this.strategie == Strategie.RECHERCHERBATEAU) {
+            if (celluleTouche == TypeCellule.NAVIREINTACT) {
                 coordonneePivot = new Coordonnee(this.derniereCoordonneAttaque.getRangee(), this.derniereCoordonneAttaque.getColonne());
                 this.strategie = Strategie.CHERCHERALIGNEMENT;
             }
-        }else if(this.strategie == Strategie.CHERCHERALIGNEMENT){
-            if(celluleTouche == TypeCellule.NAVIREINTACT){
+        } else if (this.strategie == Strategie.CHERCHERALIGNEMENT) {
+            if (celluleTouche == TypeCellule.NAVIREINTACT) {
                 this.strategie = Strategie.SUIVREALIGNEMENT;
             }
-        }else if(this.strategie == Strategie.SUIVREALIGNEMENT){
-            if(celluleTouche == TypeCellule.EAU){
+        } else if (this.strategie == Strategie.SUIVREALIGNEMENT) {
+            if (celluleTouche == TypeCellule.EAU) {
                 this.strategie = Strategie.VERIFIERAUTREBOUT;
             }
-        }else if(this.strategie == Strategie.VERIFIERAUTREBOUT){
-            if(celluleTouche == TypeCellule.EAU){
+        } else if (this.strategie == Strategie.VERIFIERAUTREBOUT) {
+            if (celluleTouche == TypeCellule.EAU) {
                 this.strategie = Strategie.RECHERCHERBATEAU;
             }
         }
-        if(this.difficulte == Difficulte.INTERMEDIAIRE){
+        if (this.difficulte == Difficulte.INTERMEDIAIRE) {
         }
 
     }
 
-    public int nombreDePossibilites(){
+    public int nombreDePossibilites() {
         int sommePossibilite = 0;
         for (int i = 0; i < coordonneesPossibles.size(); i++) {
             sommePossibilite += coordonneesPossibles.get(i).size();
         }
         return sommePossibilite;
     }
-
-
 
 
 }

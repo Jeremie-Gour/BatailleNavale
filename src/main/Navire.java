@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Cette classe représente un objet de type Navire.
  */
