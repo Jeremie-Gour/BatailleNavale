@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Cette classe représente un Joueur humain.
  */

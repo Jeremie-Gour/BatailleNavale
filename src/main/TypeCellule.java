@@ -1,3 +1,5 @@
+package main;
+
 public enum TypeCellule {
     NAVIREINTACT('N'),
     NAVIRETOUCHE('o'),

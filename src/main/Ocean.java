@@ -1,8 +1,6 @@
-import java.util.HashSet;
-import java.util.ArrayList;
+package main;
+
 import java.util.Random;
-import java.util.Set;
-import java.util.List;
 
 /**
  * Cette classe représente un océan sous la forme d'une matrice de jeu.
@@ -15,10 +13,6 @@ public class Ocean {
     int cellulesTotales = TAILLE_HORIZONTALE_MAX * TAILLE_VERTICALE_MAX;
     int cellulesOccupeesParBateau = 0;
     int cellulesDeNavireIntactes = calculerNombreTirsRestants();
-
-
-
-
 
     private Cellule[][] ocean;
 
@@ -82,7 +76,7 @@ public class Ocean {
     /**
      * Place tous les navires d'une flotte de façon aléatoire sur l'océan.
      */
-    public void placerNaviresAleatoirement(TypeJoueur typeJoueur) {
+    public void placerNaviresAleatoirement() {
         Alignement alignement;
         int tmpAlignement; // Si 0, alignement horizontal, 1 vertical
         int rangee;
@@ -91,7 +85,7 @@ public class Ocean {
         for (Navire navire : flotte.listeNavires) {
             boolean estEmplacementValide;
 
-            Random random = new java.util.Random();
+            Random random = new Random();
 
             // Génère un alignement
             tmpAlignement = random.nextInt(2);
@@ -222,6 +216,128 @@ public class Ocean {
 
 
     /**
+     * Vérifie le placement d'un navire.
+     */
+    public boolean verifierBateau(Coordonnee coordonne, Alignement alignement, Navire navire){
+        boolean estEmplacementValide = true;
+        int rangee = coordonne.getRangee();
+        int colonne = coordonne.getColonne();
+        if (alignement == Alignement.HORIZONTAL) {
+                //Verifie que ca ne peut pas depasser les bordures
+                if (colonne + navire.getTypeNavire().getTaille() < TAILLE_HORIZONTALE_MAX) {
+
+                    // Verifie pour chacune des cellules si il n'y a pas deja un bateau qui overlap et si il n'y en a pas un collé
+                    for (int i = 0; i < navire.getTypeNavire().getTaille(); i++) {
+                        if (i == 0) {
+                            if (colonne != 0) {
+                                if (ocean[rangee][colonne - 1].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (i == navire.getTypeNavire().getTaille() - 1) {
+                            if (colonne != TAILLE_HORIZONTALE_MAX - 1) {
+                                if (ocean[rangee][colonne + i + 1].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Verifie si la cellule est libre
+                        if (ocean[rangee][colonne + i].estOccupeeParNavire()) {
+                            estEmplacementValide = false;
+                            break;
+
+                        } else {
+                            // Regarde en haut et en bas
+                            // Si la rangee est la limite superieure:
+                            if (rangee == 0) {
+                                if (ocean[rangee + 1][colonne + i].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                                // Si la rangee est la limite inferieure
+                            } else if (rangee == (TAILLE_HORIZONTALE_MAX - 1)) {
+                                if (ocean[rangee - 1][colonne + i].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                            } else {
+                                if (ocean[rangee - 1][colonne + i].estOccupeeParNavire() || ocean[rangee + 1][colonne + i].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+                } else {
+                    estEmplacementValide = false;
+                }
+            } else {
+                // Verifie que ca ne peut pas depasser les bordures
+                if (rangee + navire.getTypeNavire().getTaille() < TAILLE_VERTICALE_MAX) {
+
+                    // Verifie pour chacune des cellules si il n'y a pas deja un bateau qui overlap et si il n'y en a pas un collé
+                    for (int i = 0; i < navire.getTypeNavire().getTaille(); i++) {
+
+                        if (i == 0) {
+                            if (rangee != 0) {
+                                if (ocean[rangee - 1][colonne].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (i == navire.getTypeNavire().getTaille() - 1) {
+                            if (colonne != TAILLE_VERTICALE_MAX - 1) {
+                                if (ocean[rangee + i + 1][colonne].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Verifie si la cellule est libre
+                        if (ocean[rangee + i][colonne].estOccupeeParNavire()) {
+                            estEmplacementValide = false;
+                            break;
+
+                        } else {
+                            // Regarde a gauche et a droite
+                            // Si la colonne est la limite de gauche:
+                            if (colonne == 0) {
+                                if (!ocean[rangee + i][colonne + 1].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                            } else if (colonne == TAILLE_HORIZONTALE_MAX - 1) {
+                                if (ocean[rangee + i][colonne - 1].estOccupeeParNavire()) {
+                                    estEmplacementValide = false;
+                                    break;
+                                }
+                            } else if (ocean[rangee + i][colonne + 1].estOccupeeParNavire() || ocean[rangee + i][colonne - 1].estOccupeeParNavire()) {
+                                estEmplacementValide = false;
+                                break;
+                            }
+
+                        }
+                    }
+                } else {
+                    estEmplacementValide = false;
+                }
+            }
+
+        if (estEmplacementValide){
+            placerNavire(coordonne, alignement, navire);
+        }
+        return estEmplacementValide;
+    }
+
+
+    /**
      * Place un navire sur l'océan. Les coordonnées de la proue du navire sont prises en entrée.
      * Si le navire est placé horizontalement, la proue du navire fait face à l'ouest.
      * Si le navire est placée verticalement, la proue du navire fait face au nord.
@@ -250,7 +366,7 @@ public class Ocean {
      * @param coordonnee La coordonnée de la cellule à tirer.
      * @return le type de la cellule qui a été tirée.
      */
-    public TypeCellule tirerOrdinateur(Coordonnee coordonnee) {
+    public TypeCellule tirer(Coordonnee coordonnee) {
         TypeCellule typeCellule = TypeCellule.EAU;
 
         if (ocean[coordonnee.getRangee()][coordonnee.getColonne()].typeCellule == TypeCellule.EAU) {
@@ -288,9 +404,21 @@ public class Ocean {
      * Place une bombe sur la grille de jeu.
      */
     // Il faut vérifier qu'on ne tire pas en dehors de la matrice.
-    public void placerBombes() {
-        Coordonnee coordonneeTir1 = new Coordonnee(5, 5);
-        ocean[coordonneeTir1.getRangee()][coordonneeTir1.getColonne()].typeCellule = TypeCellule.BOMBE;
+    public boolean placerBombe(Coordonnee coordonnee) {
+        /**
+         * Faut pas shooter sur un bateau
+         * Faut pas tirer en dehors de la grille
+         *
+         */
+        boolean positionBombeValide = true;
+        if ((coordonnee.getColonne() < 0 || coordonnee.getColonne() > TAILLE_HORIZONTALE_MAX - 1) || (coordonnee.getRangee() < 0 || coordonnee.getRangee() > TAILLE_VERTICALE_MAX - 1)){
+            positionBombeValide = false;
+        } else if(ocean[coordonnee.getRangee()][coordonnee.getColonne()].estOccupee()){
+            positionBombeValide = false;
+        } else {
+            ocean[coordonnee.getRangee()][coordonnee.getColonne()].typeCellule = TypeCellule.BOMBE;
+        }
+        return positionBombeValide;
     }
 
 

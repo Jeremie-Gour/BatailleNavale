@@ -1,3 +1,5 @@
+package main;
+
 public enum TypeNavire {
     PORTEAVIONS(5),
     CROISEUR(4),
