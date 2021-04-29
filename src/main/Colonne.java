@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Cette énumération énumère les différentes colonnes de la grille de jeu.
  */
