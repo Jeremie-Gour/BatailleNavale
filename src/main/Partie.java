@@ -19,14 +19,12 @@ public class Partie {
     // ** Quand on affiche la grille de l'autre, il faudrait afficher de l'eau ('~') à la place des bateaux/bombes -- P-e faire 2 fonctions Partie.afficherOcean() **
     public void jouerPartie() {
         TypeCellule celluleJoueurHumain;
-        TypeCellule celluleOrdinateur;
+        TypeCellule celluleOrdinateur = null;
         Ocean oceanHumain = new Ocean();
         Ocean oceanOrdinateur = new Ocean();
 
-
         // Sélection du niveau de difficulté
-        String choixDifficulte = Message.choisirDifficulte();
-        Difficulte difficulte = Difficulte.valueOf(choixDifficulte);
+        Difficulte difficulte = Message.choisirDifficulte();
         Ordinateur ordinateur = new Ordinateur(difficulte);
 
 
@@ -58,13 +56,13 @@ public class Partie {
         }
 
         // Placement des navires du joueur
-        for (Navire navire: oceanHumain.flotte.listeNavires){
+        for (Navire navire : oceanHumain.flotte.listeNavires) {
             String positionNavire = Message.saisirNavire(navire);
-            Alignement alignementNavire = Alignement.valueOf(Character.toString(positionNavire.charAt(2))) ;
+            Alignement alignementNavire = Alignement.valueOf(Character.toString(positionNavire.charAt(2)));
 
             int rangee = Integer.parseInt(Character.toString(positionNavire.charAt(1)));
             int colonne = Message.stringToColonne(Character.toString(positionNavire.charAt(0)));
-            Coordonnee coordonneeNavire = new Coordonnee(rangee,colonne);
+            Coordonnee coordonneeNavire = new Coordonnee(rangee, colonne);
 
             oceanHumain.placerNavire(coordonneeNavire, alignementNavire, navire);
         }
@@ -81,20 +79,44 @@ public class Partie {
         // Alterne de joueur en joueur jusqu'a temps qu'il y n'y a pas de gagnant
         // J'ai mis les tirs en boolean (un tir retourne true si il reste des bateaux à pew pew).
         // Va p-e falloir changer le retour des fonctions pour quand on shoot une bombe (typeCellule maybe)
+        boolean humainBombe = false;
+        boolean ordinateurBombe = false;
         /**
          * RENDU ICI ***************************
          */
         while (oceanHumain.celluleDeNavireIntactesDispo() && oceanOrdinateur.celluleDeNavireIntactesDispo()) {
-            Coordonnee coordonneeNavireHumain = Message.saisirTir();
-            celluleJoueurHumain = oceanFacile.tirer(coordonneeNavireHumain);
 
-            Coordonnee coordonneeOrdinateur = ordinateur.prochaineAttaque();
-            celluletireIntermediaire = oceanOrdinateur.tirer(coordonneeOrdinateur);
+            if (!humainBombe) {
+                Coordonnee coordonneeNavireHumain = Message.saisirTir();
 
-            facile.recevoirResultat(celluletireFacile);
-            difficile.recevoirResultat(celluletireIntermediaire);
+                //if bombe passe le tour
+                celluleJoueurHumain = oceanOrdinateur.tirer(coordonneeNavireHumain);
+                if (celluleJoueurHumain == TypeCellule.BOMBE) {
+                    humainBombe = true;
+                    System.out.println("Touch/ une bombe, passe le tour");
+                } else {
+                    humainBombe = false;
+                }
+            }
+
+            //if bombe passe le tour
+            if (!ordinateurBombe) {
+                Coordonnee coordonneeNavireOrdinateur = ordinateur.prochaineAttaque();
+
+                //if bombe passe le tour
+                celluleOrdinateur = oceanOrdinateur.tirer(coordonneeNavireOrdinateur);
+                if (celluleOrdinateur == TypeCellule.BOMBE) {
+                    ordinateurBombe = true;
+                    System.out.println("Touch/ une bombe, passe le tour");
+                } else {
+                    ordinateurBombe = false;
+                }
+            }
+            ordinateur.recevoirResultat(celluleOrdinateur);
+
+
         }
-        Message.afficherGagnant(oceanFacile.celluleDeNavireIntactesDispo(), oceanIntermediaire.celluleDeNavireIntactesDispo());
+        Message.afficherGagnant(oceanHumain.celluleDeNavireIntactesDispo(), oceanOrdinateur.celluleDeNavireIntactesDispo());
     }
 
 

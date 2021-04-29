@@ -15,17 +15,21 @@ public class Message {
         return scan.nextLine();
     }
 
-    public static String choisirDifficulte() {
-        String difficulte = "";
+    public static Difficulte choisirDifficulte() {
+        Difficulte difficulte = Difficulte.FACILE;
+        String difficulteSaisie;
         boolean inputValide = false;
-        while(!inputValide) {
+        while (!inputValide) {
             Scanner scan = new Scanner(System.in);
             System.out.println("Choisissez le niveau de difficulté (1=facile, 2=intérmediaire ou 3=difficile");
-            difficulte = scan.nextLine();
-            switch(difficulte){
+            difficulteSaisie = scan.nextLine();
+            switch (difficulteSaisie) {
                 case "1":
+                    difficulte = Difficulte.FACILE;
                 case "2":
+                    difficulte = Difficulte.INTERMEDIAIRE;
                 case "3":
+                    difficulte = Difficulte.DIFFICILE;
                     inputValide = true;
                     break;
                 default:
@@ -39,7 +43,7 @@ public class Message {
     public static boolean avecBombe() {
         boolean avecBombe = false;
         boolean inputValide = false;
-        while(!inputValide) {
+        while (!inputValide) {
             Scanner scan = new Scanner(System.in);
             System.out.println("Voulez-vous jouer avec des bombes? (oui ou non)");
             String bombes = scan.nextLine();
