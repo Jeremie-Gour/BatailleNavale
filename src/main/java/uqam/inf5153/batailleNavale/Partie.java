@@ -63,7 +63,7 @@ public class Partie {
                 Alignement alignementNavire = Message.saisirAlignement(positionNavire.charAt(2));
 
                 int rangee = Integer.parseInt(Character.toString(positionNavire.charAt(1)));
-                int colonne = Message.stringToColonne(Character.toString(positionNavire.charAt(0)));
+                int colonne = Message.stringToColonne(positionNavire.charAt(0));
                 Coordonnee coordonneeNavire = new Coordonnee(rangee, colonne);
 
                 placeNavire = oceanHumain.verifierBateau(coordonneeNavire, alignementNavire, navire);

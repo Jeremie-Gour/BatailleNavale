@@ -11,14 +11,29 @@ public class Message {
     private final static String documents = "";
 
     public static String typeDocument() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Quel type de document voulez-vous pour sauvegarder l'historique de la partie? " +
-                "(texte, xml ou json)");
-        return scan.nextLine();
+        String type = null;
+        boolean inputValide = false;
+        while (!inputValide) {
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Quel type de document voulez-vous pour sauvegarder l'historique de la partie? " +
+                    "(texte, xml ou json)");
+            type = scan.nextLine();
+            switch (type){
+                case "texte":
+                case "xml":
+                case "json":
+                    inputValide = true;
+                    break;
+                default:
+                    System.out.println("Veuillez entrer un type de document valide.");
+                    break;
+            }
+        }
+        return type;
     }
 
     public static Difficulte choisirDifficulte() {
-        Difficulte difficulte = Difficulte.FACILE;
+        Difficulte difficulte = null;
         String difficulteSaisie;
         boolean inputValide = false;
         while (!inputValide) {
@@ -28,8 +43,12 @@ public class Message {
             switch (difficulteSaisie) {
                 case "1":
                     difficulte = Difficulte.FACILE;
+                    inputValide = true;
+                    break;
                 case "2":
                     difficulte = Difficulte.INTERMEDIAIRE;
+                    inputValide = true;
+                    break;
                 case "3":
                     difficulte = Difficulte.DIFFICILE;
                     inputValide = true;
@@ -62,13 +81,21 @@ public class Message {
     }
 
     public static Coordonnee saisirBombe() {
-        //return si coordonnee est plus petite que 0 ou plus grande taillemax
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Veuillez entrer les coordonnées de la bombe. Exemple: E5");
-        String bombe = scan.nextLine();
+        boolean inputValide = false;
+        String bombe = null;
 
-        String[] coordoSplit = bombe.split("");
-        return new Coordonnee(Integer.parseInt(coordoSplit[1]), stringToColonne(coordoSplit[0]));
+        while(!inputValide) {
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Veuillez entrer les coordonnées de la bombe. Exemple: E5");
+            bombe = scan.nextLine();
+
+            if(bombe.length() == 2 && isDigit(bombe.charAt(1)) && bombe.charAt(0) >= 'A' && bombe.charAt(0) <= 'J'){
+                inputValide = true;
+            }else{
+                System.out.println("Veuillez entrer des coordonnées valides.");
+            }
+        }
+        return new Coordonnee(Integer.parseInt(String.valueOf(bombe.charAt(1))), stringToColonne(bombe.charAt(0)));
     }
 
     public static String saisirNavire(Navire navire) {
@@ -78,49 +105,48 @@ public class Message {
 
         while(!inputValide) {
             Scanner scan = new Scanner(System.in);
-            System.out.println("Veuillez entrer les coordonnées de la proue du " + navire.getTypeNavire() + " et son alignement (H ou V). Exemple: A5V");
+            System.out.println("Veuillez entrer les coordonnées de la proue du " + navire.getTypeNavire() +
+                    " et son alignement (H:horizontal vers l'est ou V:vertical vers le sud). Exemple: A5V");
             bateau = scan.nextLine();
-            if(isDigit(bateau.charAt(1)) && bateau.charAt(0) >= 'A' && bateau.charAt(0) <= 'J' &&
-                    (bateau.charAt(2) == 'H' || bateau.charAt(1) == 'V')) {
+            if(bateau.length() == 3 && isDigit(bateau.charAt(1)) && bateau.charAt(0) >= 'A' && bateau.charAt(0) <= 'J' &&
+                    (bateau.charAt(2) == 'H' || bateau.charAt(2) == 'V')) {
                 inputValide = true;
             } else {
                 System.out.println("Veuillez entrer des coordonnées valides.");
             }
         }
-
         return bateau;
     }
 
     public static Alignement saisirAlignement(char alignement){
         Alignement alignementBateau = null;
-        switch(alignement){
-            case 'V':
-                alignementBateau = Alignement.VERTICAL;
-                break;
-            case 'H':
-                alignementBateau = Alignement.HORIZONTAL;
-                break;
-            default:
-
-                break;
+        if(alignement == 'V'){
+            alignementBateau = Alignement.VERTICAL;
+        }else if(alignement == 'H'){
+            alignementBateau = Alignement.HORIZONTAL;
         }
         return alignementBateau;
     }
 
-
     public static Coordonnee saisirTir() {
-        Scanner scan = new Scanner(System.in);
+        String tir = null;
+        boolean inputValide = false;
+        while (!inputValide) {
+            Scanner scan = new Scanner(System.in);
 
-        System.out.println("Veuillez entrer la coordonnée de votre tir. Exemple: B4");
-        String tir = scan.nextLine();
-
-        String[] coordoSplit = tir.split("");
-
-        return new Coordonnee(Integer.parseInt(coordoSplit[1]), stringToColonne(coordoSplit[0]));
+            System.out.println("Veuillez entrer la coordonnée de votre tir. Exemple: B4");
+            tir = scan.nextLine();
+            if(tir.length() == 2 && isDigit(tir.charAt(1)) && tir.charAt(0) >= 'A' && tir.charAt(0) <= 'J') {
+                inputValide = true;
+            } else {
+                System.out.println("Veuillez entrer des coordonnées valides.");
+            }
+        }
+        return new Coordonnee(Integer.parseInt(String.valueOf(tir.charAt(1))), stringToColonne(tir.charAt(0)));
     }
 
-    public static int stringToColonne(String stringColonne) {
-        Colonne colonne = Colonne.valueOf(Character.toString(stringColonne.charAt(0)));
+    public static int stringToColonne(char charColonne) {
+        Colonne colonne = Colonne.valueOf(Character.toString(charColonne));
 
         return colonne.getColonne();
     }
