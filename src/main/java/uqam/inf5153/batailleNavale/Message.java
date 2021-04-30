@@ -2,6 +2,8 @@ package uqam.inf5153.batailleNavale;
 
 import java.util.Scanner;
 
+import static java.lang.Character.*;
+
 /**
  * Cette classe contient toutes les méthodes de saisie et de validation.
  */
@@ -70,13 +72,39 @@ public class Message {
     }
 
     public static String saisirNavire(Navire navire) {
-        Scanner scan = new Scanner(System.in);
+        String bateau = null;
 
-        System.out.println("Veuillez entrer les coordonnées de la proue du " + navire.getTypeNavire() + " et son alignement (H ou V). Exemple: A5V");
-        String bateau = scan.nextLine();
+        boolean inputValide = false;
 
+        while(!inputValide) {
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Veuillez entrer les coordonnées de la proue du " + navire.getTypeNavire() + " et son alignement (H ou V). Exemple: A5V");
+            bateau = scan.nextLine();
+            if(isDigit(bateau.charAt(1)) && bateau.charAt(0) >= 'A' && bateau.charAt(0) <= 'J' &&
+                    (bateau.charAt(2) == 'H' || bateau.charAt(1) == 'V')) {
+                inputValide = true;
+            } else {
+                System.out.println("Veuillez entrer des coordonnées valides.");
+            }
+        }
 
         return bateau;
+    }
+
+    public static Alignement saisirAlignement(char alignement){
+        Alignement alignementBateau = null;
+        switch(alignement){
+            case 'V':
+                alignementBateau = Alignement.VERTICAL;
+                break;
+            case 'H':
+                alignementBateau = Alignement.HORIZONTAL;
+                break;
+            default:
+
+                break;
+        }
+        return alignementBateau;
     }
 
 

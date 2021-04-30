@@ -14,7 +14,19 @@ public class Ocean {
     int cellulesOccupeesParBateau = 0;
     int cellulesDeNavireIntactes = calculerNombreTirsRestants();
 
+
+
     private Cellule[][] ocean;
+
+    public void setOcean(Cellule[][] ocean) {
+        this.ocean = ocean;
+    }
+
+    public Cellule[][] getOcean() {
+        return ocean;
+    }
+
+
 
     /**
      * Construit la grille de jeu.
@@ -29,11 +41,6 @@ public class Ocean {
             }
         }
     }
-    /*
-
-
-
-     */
 
     /**
      * Affiche la grille de jeu.
@@ -57,20 +64,20 @@ public class Ocean {
     }
 
 
-    /**
-     * Place tous les navires d'une flotte sur l'océan.
-     */
-    public void placerNavires() {
-        for (Navire navire : flotte.listeNavires) {
-            System.out.println("\n Veuillez entrer les coordonnées de la proue du " + navire.getTypeNavire() + " et son alignement (H ou V). Exemple: A5V");
-
-            // A changer pour construire les coordonnees et l'alignement avec les entrees de l'utilisateur
-            Coordonnee coordonnees = new Coordonnee(1, 1);
-            Alignement alignement = Alignement.VERTICAL;
-
-            placerNavire(coordonnees, alignement, navire);
-        }
-    }
+//    /**
+//     * Place tous les navires d'une flotte sur l'océan.
+//     */
+//    public void placerNavires() {
+//        for (Navire navire : flotte.listeNavires) {
+//            System.out.println("\n Veuillez entrer les coordonnées de la proue du " + navire.getTypeNavire() + " et son alignement (H ou V). Exemple: A5V");
+//
+//            // A changer pour construire les coordonnees et l'alignement avec les entrees de l'utilisateur
+//            Coordonnee coordonnees = new Coordonnee(1, 1);
+//            Alignement alignement = Alignement.VERTICAL;
+//
+//            placerNavire(coordonnees, alignement, navire);
+//        }
+//    }
 
     /**
      * Place tous les navires d'une flotte de façon aléatoire sur l'océan.

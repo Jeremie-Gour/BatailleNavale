@@ -56,14 +56,25 @@ public class Partie {
 
         // Placement des navires du joueur
         for (Navire navire : oceanHumain.flotte.listeNavires) {
-            String positionNavire = Message.saisirNavire(navire);
-            Alignement alignementNavire = Alignement.valueOf(Character.toString(positionNavire.charAt(2)));
+            boolean placeNavire;
+            oceanHumain.afficherOcean();
+            do {
+                String positionNavire = Message.saisirNavire(navire);
+                Alignement alignementNavire = Message.saisirAlignement(positionNavire.charAt(2));
 
-            int rangee = Integer.parseInt(Character.toString(positionNavire.charAt(1)));
-            int colonne = Message.stringToColonne(Character.toString(positionNavire.charAt(0)));
-            Coordonnee coordonneeNavire = new Coordonnee(rangee, colonne);
+                int rangee = Integer.parseInt(Character.toString(positionNavire.charAt(1)));
+                int colonne = Message.stringToColonne(Character.toString(positionNavire.charAt(0)));
+                Coordonnee coordonneeNavire = new Coordonnee(rangee, colonne);
 
-            oceanHumain.placerNavire(coordonneeNavire, alignementNavire, navire);
+                placeNavire = oceanHumain.verifierBateau(coordonneeNavire, alignementNavire, navire);
+                if(placeNavire == true){
+                    oceanHumain.placerNavire(coordonneeNavire, alignementNavire, navire);
+                    oceanHumain.afficherOcean();
+                } else {
+                    System.out.println("Vous ne pouvez pas placer un bateau à ces coordonnées.");
+                }
+
+            } while(!placeNavire);
         }
 
 
