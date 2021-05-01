@@ -1,5 +1,6 @@
 package uqam.inf5153.batailleNavale;
 
+
 import java.util.Scanner;
 
 import static java.lang.Character.*;

@@ -17,4 +17,5 @@ public enum Difficulte {
     public int getDifficulte() {
         return difficulte;
     }
+
 }

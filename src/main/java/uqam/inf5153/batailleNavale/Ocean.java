@@ -14,7 +14,7 @@ public class Ocean {
     int cellulesOccupeesParBateau = 0;
     int cellulesDeNavireIntactes = calculerNombreTirsRestants();
 
-    private Cellule[][] ocean;
+    protected Cellule[][] ocean;
 
     public void setOcean(Cellule[][] ocean) {
         this.ocean = ocean;

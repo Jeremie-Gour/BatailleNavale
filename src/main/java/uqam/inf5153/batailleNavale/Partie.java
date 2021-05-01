@@ -1,5 +1,9 @@
 package uqam.inf5153.batailleNavale;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.Random;
 
 /**
@@ -130,8 +134,30 @@ public class Partie {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+
+
+        try
+        {
+            FileOutputStream fout= new FileOutputStream("stdout.xml");
+            FileOutputStream ferr= new FileOutputStream("stderr.log");
+
+            MultiOutputStream multiOut= new MultiOutputStream(System.out, fout);
+            MultiOutputStream multiErr= new MultiOutputStream(System.err, ferr);
+
+            PrintStream stdout= new PrintStream(multiOut);
+            PrintStream stderr= new PrintStream(multiErr);
+
+            System.setOut(stdout);
+            System.setErr(stderr);
+        }
+        catch (FileNotFoundException ex)
+        {
+            //Could not create/open the file
+        }
+
         Partie partie = new Partie();
         partie.jouerPartie();
+
     }
 }
