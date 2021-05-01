@@ -13,22 +13,14 @@ class OceanTest {
     private static final int TAILLE_HORIZONTALE_MAX = 10;
     private static final int TAILLE_VERTICALE_MAX = 10;
 
-    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream outputSave = new ByteArrayOutputStream();
 
-    //// Tests de la classe Ocean
     @BeforeEach
     void setUp() {
         // Attrape les outputs
-        System.setOut(new PrintStream(outputStreamCaptor));
+        System.setOut(new PrintStream(outputSave));
     }
 
-    @Test
-    void setOcean() {
-    }
-
-    @Test
-    void getOcean() {
-    }
 
     // Vérifie la création d'un océan
     @Test
@@ -57,7 +49,7 @@ class OceanTest {
                       "9 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
                       "    A B C D E F G H I J";
         oceanHumain.afficherOcean();
-        assertEquals(test,outputStreamCaptor.toString().trim());
+        assertEquals(test,outputSave.toString().trim());
     }
 
     // Vérifie le placage des bateaux par l'ordinateur
@@ -77,21 +69,21 @@ class OceanTest {
 
     // Vérifie un emplacement valide pour placer un bateau
     @Test
-    void verifierBateauTrueTest() {
+    void verifierBateauTest1() {
         Ocean oceanHumain = new Ocean();
         assertTrue(oceanHumain.verifierBateau(new Coordonnee(0,0), Alignement.VERTICAL,new Navire(TypeNavire.PORTEAVIONS)));
     }
 
     // Vérifie un emplacement non-valide qui va dépasser les bordures
     @Test
-    void verifierBateauFalseTest1() {
+    void verifierBateauTest2() {
         Ocean oceanHumain = new Ocean();
         assertFalse(oceanHumain.verifierBateau(new Coordonnee(9,0), Alignement.VERTICAL,new Navire(TypeNavire.PORTEAVIONS)));
     }
 
     // Vérifie un emplacement non-valide qui est collé à un autre bateau
     @Test
-    void verifierBateauFalseTest2() {
+    void verifierBateauTest3() {
         Ocean oceanHumain = new Ocean();
         oceanHumain.placerNavire(new Coordonnee(0,0), Alignement.VERTICAL, new Navire(TypeNavire.PORTEAVIONS));
         assertFalse(oceanHumain.verifierBateau(new Coordonnee(0,1), Alignement.VERTICAL,new Navire(TypeNavire.PORTEAVIONS)));
@@ -170,7 +162,7 @@ class OceanTest {
         assertFalse(oceanHumain.placerBombe(new Coordonnee(0,0)));
     }
 
-    // Test s'il reste des navires qui ne sont pas coulés
+    // Test s'il reste des navires qui ne sont pas coulésgi
     @Test
     void celluleDeNavireIntactesDispoTest1() {
         Ocean oceanOrdinateur = new Ocean();
