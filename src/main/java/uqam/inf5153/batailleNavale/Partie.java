@@ -9,12 +9,7 @@ import java.util.Random;
  * Cette classe contient toutes les fonctions nécessaires pour jouer une partie de Bataille Navale.
  */
 public class Partie {
-    JoueurHumain joueur = new JoueurHumain();
-    JoueurOrdinateur ordinateur = new JoueurOrdinateur();
-    Ocean oceanFacile = new Ocean();
-    Ocean oceanIntermediaire = new Ocean();
-    Ordinateur facile = new Ordinateur(Difficulte.FACILE);
-    Ordinateur difficile = new Ordinateur(Difficulte.DIFFICILE);
+
 
     public void jouerPartie() {
         TypeCellule celluleJoueurHumain;

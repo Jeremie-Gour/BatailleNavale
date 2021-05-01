@@ -37,16 +37,16 @@ class OceanTest {
     @Test public void afficherOceanTest(){
 
         Ocean oceanHumain = new Ocean();
-        String test = "0 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "1 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "2 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "3 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "4 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "5 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "6 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "7 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "8 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
-                      "9 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+        String test = "0 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "1 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "2 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "3 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "4 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "5 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "6 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "7 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "8 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                      "9 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
                       "    A B C D E F G H I J";
         oceanHumain.afficherOcean();
         assertEquals(test,outputSave.toString().trim());
@@ -164,7 +164,7 @@ class OceanTest {
 
     // Test s'il reste des navires qui ne sont pas coulésgi
     @Test
-    void celluleDeNavireIntactesDispoTest1() {
+    void resteDesNaviresTest1() {
         Ocean oceanOrdinateur = new Ocean();
         oceanOrdinateur.placerNaviresAleatoirement();
         assertTrue(oceanOrdinateur.resteDesNavires());
@@ -172,7 +172,7 @@ class OceanTest {
 
     // Test quand il ne reste plus de navires à couler
     @Test
-    void celluleDeNavireIntactesDispoTest2() {
+    void resteDesNaviresTest2() {
         Ocean oceanOrdinateur = new Ocean();
         oceanOrdinateur.placerNavire(new Coordonnee(0,0), Alignement.HORIZONTAL, new Navire(TypeNavire.PORTEAVIONS));
         oceanOrdinateur.placerNavire(new Coordonnee(2,0), Alignement.HORIZONTAL, new Navire(TypeNavire.CROISEUR));

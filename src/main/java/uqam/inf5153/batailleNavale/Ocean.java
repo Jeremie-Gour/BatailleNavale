@@ -65,6 +65,7 @@ public class Ocean {
 
         for (Navire navire : flotte.getListeNavires()) {
             boolean estEmplacementValide;
+            Coordonnee coordonnee;
 
             Random random = new Random();
 
@@ -87,9 +88,13 @@ public class Ocean {
         }
     }
 
-
     /**
      * Vérifie le placement d'un navire.
+     *
+     * @param coordonne Les coordonnées de la proue du navire
+     * @param alignement L'alignement du navire
+     * @param navire le navire
+     * @return true si le positionnement est valide, false sinon
      */
     public boolean verifierBateau(Coordonnee coordonne, Alignement alignement, Navire navire) {
         boolean estEmplacementValide = true;
@@ -291,9 +296,9 @@ public class Ocean {
     }
 
     /**
-     * Calcul le nombre de tirs totaux a effectuer a partir de la taille de tous les bateaux d'une flotte
+     * Calcul le nombre de tirs totaux à effectuer à partir de la taille de tous les bateaux d'une flotte
      *
-     * @return
+     * @return Le nombre de cellules de type NAVIREINTACT restantes
      */
     private int calculerNombreTirsRestants() {
         int cellulesNavireIntactes = 0;

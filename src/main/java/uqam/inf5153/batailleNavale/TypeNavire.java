@@ -23,13 +23,13 @@ public enum TypeNavire {
     public String toString() {
         String nom = "Navire";
         if (this.name().equals(PORTEAVIONS.name())){
-            nom = "Porte-Avions";
+            nom = "Porte-Avions(5)";
         } else if (this.name().equals(CROISEUR.name())){
-            nom = "Croiseur";
+            nom = "Croiseur(4)";
         } else if (this.name().equals(CONTRETORPILLEUR.name())){
             nom = "Contre-Torpilleur(3)";
         } else if (this.name().equals(TORPILLEUR.name())){
-            nom = "Torpilleur";
+            nom = "Torpilleur(2)";
         }
         return nom;
     }

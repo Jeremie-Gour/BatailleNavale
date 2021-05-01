@@ -16,8 +16,6 @@ public class Cellule {
      * @return true si un navire occupe la cellule, false sinon.
      */
     public boolean estOccupeeParNavire() {
-        // La fonction ne fait que checker pour un bateau, faudrait faire plus en détails pour check avec bombe etc aussi.
-        // Pour l'instant c'est correct parce que le programme ne tient pas encore compte des tirs.
         return this.typeCellule == TypeCellule.NAVIREINTACT;
     }
 
