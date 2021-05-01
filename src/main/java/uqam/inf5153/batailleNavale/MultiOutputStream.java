@@ -3,6 +3,10 @@ package uqam.inf5153.batailleNavale;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * Classe qui duplique la sortie standard et la sortie d'erreur pour permettre d'écrire dans des fichiers
+ * Source: https://www.codeproject.com/Tips/315892/A-quick-and-easy-way-to-direct-Java-System-out-to
+ */
 public class MultiOutputStream extends OutputStream
 {
     OutputStream[] outputStreams;

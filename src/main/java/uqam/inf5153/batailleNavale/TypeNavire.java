@@ -1,12 +1,15 @@
 package uqam.inf5153.batailleNavale;
 
+/**
+ * Cette énumération relate les différents types de navires qui existent dans le jeu.
+ */
 public enum TypeNavire {
     PORTEAVIONS(5),
     CROISEUR(4),
     CONTRETORPILLEUR(3),
     TORPILLEUR(2);
 
-    private int taille;
+    private final int taille;
 
     TypeNavire(int _taille) {
         this.taille = _taille;
@@ -24,7 +27,7 @@ public enum TypeNavire {
         } else if (this.name().equals(CROISEUR.name())){
             nom = "Croiseur";
         } else if (this.name().equals(CONTRETORPILLEUR.name())){
-            nom = "Contre-Torpilleur";
+            nom = "Contre-Torpilleur(3)";
         } else if (this.name().equals(TORPILLEUR.name())){
             nom = "Torpilleur";
         }

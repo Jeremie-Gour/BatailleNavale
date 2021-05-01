@@ -21,6 +21,11 @@ public class Cellule {
         return this.typeCellule == TypeCellule.NAVIREINTACT;
     }
 
+    /**
+     * Indique si une cellule est occupée.
+     *
+     * @return true si la cellulle est occupée, false sinon.
+     */
     public boolean estOccupee() {
         boolean estOccupee;
         estOccupee = this.typeCellule == TypeCellule.NAVIREINTACT || this.typeCellule == TypeCellule.NAVIRECOULE

@@ -25,4 +25,14 @@ public enum Colonne {
         return colonne;
     }
 
+    /**
+     * Transforme le char correspondant à la colonne en integer.
+     * @param charColonne le caractère qui représente la colonne.
+     * @return La valeur en int de la colonne.
+     */
+    public static int stringToColonne(char charColonne) {
+        Colonne colonne = Colonne.valueOf(Character.toString(charColonne));
+
+        return colonne.getColonne();
+    }
 }

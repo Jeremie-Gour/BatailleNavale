@@ -1,17 +1,18 @@
 package uqam.inf5153.batailleNavale;
 
-
 import java.util.Scanner;
-
 import static java.lang.Character.*;
 
 /**
  * Cette classe contient toutes les méthodes de saisie et de validation.
  */
-public class Message {
-    private final static String documents = "";
+public class Saisie {
 
-    public static String typeDocument() {
+    /**
+     * Saisie et valide le type de document qui contient les messages affichés à la console.
+     * @return le type de document
+     */
+    public static String saisirTypeDocument() {
         String type = null;
         boolean inputValide = false;
         while (!inputValide) {
@@ -33,7 +34,11 @@ public class Message {
         return type;
     }
 
-    public static Difficulte choisirDifficulte() {
+    /**
+     * Saisie et valide le niveau de difficulté pour l'ordinateur.
+     * @return le niveau de difficulté
+     */
+    public static Difficulte saisirNiveauDifficulte() {
         Difficulte difficulte = null;
         String difficulteSaisie;
         boolean inputValide = false;
@@ -62,6 +67,10 @@ public class Message {
         return difficulte;
     }
 
+    /**
+     * Saisie et valide l'option du jeu pour intégrer l'ajout de bombes.
+     * @return true si l'option est implémentée, false sinon
+     */
     public static boolean avecBombe() {
         boolean avecBombe = false;
         boolean inputValide = false;
@@ -81,6 +90,10 @@ public class Message {
         return avecBombe;
     }
 
+    /**
+     * Saisie et valide les coordonnées d'une cellule où le joueur veut placer une bombe.
+     * @return les coordonnées de la bombe
+     */
     public static Coordonnee saisirBombe() {
         boolean inputValide = false;
         String bombe = null;
@@ -96,9 +109,14 @@ public class Message {
                 System.out.println("Veuillez entrer des coordonnées valides.");
             }
         }
-        return new Coordonnee(Integer.parseInt(String.valueOf(bombe.charAt(1))), stringToColonne(bombe.charAt(0)));
+        return new Coordonnee(Integer.parseInt(String.valueOf(bombe.charAt(1))), Colonne.stringToColonne(bombe.charAt(0)));
     }
 
+    /**
+     * Saisie et valide les coordonnées d'une cellule où le joueur veut placer un navire.
+     * @param navire le type de navire à placer.
+     * @return Les coordonnées du naveau.
+     */
     public static String saisirNavire(Navire navire) {
         String bateau = null;
 
@@ -119,7 +137,12 @@ public class Message {
         return bateau;
     }
 
-    public static Alignement saisirAlignement(char alignement){
+    /**
+     * Détermine l'alignement du navire.
+     * @param alignement l'alignement du navire
+     * @return l'alignement du navire.
+     */
+    public static Alignement determinerAlignement(char alignement){
         Alignement alignementBateau = null;
         if(alignement == 'V'){
             alignementBateau = Alignement.VERTICAL;
@@ -129,12 +152,15 @@ public class Message {
         return alignementBateau;
     }
 
+    /**
+     * Saisie et valide les coordonnées du tir que le joueur effectue.
+     * @return la coordonnée du tir à effectuer
+     */
     public static Coordonnee saisirTir() {
         String tir = null;
         boolean inputValide = false;
         while (!inputValide) {
             Scanner scan = new Scanner(System.in);
-
             System.out.println("Veuillez entrer la coordonnée de votre tir. Exemple: B4");
             tir = scan.nextLine();
             if(tir.length() == 2 && isDigit(tir.charAt(1)) && tir.charAt(0) >= 'A' && tir.charAt(0) <= 'J') {
@@ -143,21 +169,20 @@ public class Message {
                 System.out.println("Veuillez entrer des coordonnées valides.");
             }
         }
-        return new Coordonnee(Integer.parseInt(String.valueOf(tir.charAt(1))), stringToColonne(tir.charAt(0)));
+        return new Coordonnee(Integer.parseInt(String.valueOf(tir.charAt(1))), Colonne.stringToColonne(tir.charAt(0)));
     }
 
-    public static int stringToColonne(char charColonne) {
-        Colonne colonne = Colonne.valueOf(Character.toString(charColonne));
-
-        return colonne.getColonne();
-    }
-
-    public static String afficherGagnant(boolean humainGagnant, boolean ordinateurGagnant) {
+    /**
+     * Détermine et affiche le message de fin dépendamment du gagnant.
+     * @param humain Le joueur humain et son statut de gagnant ou perdant
+     * @param ordinateur L'ordinateur et son statut de gagnant ou perdant
+     * @return le message qui affiche celui qui a gagné la partie
+     */
+    public static String afficherGagnant(boolean humain, boolean ordinateur) {
         String messageVictoire = null;
-        if (humainGagnant) {
-
+        if (humain) {
             messageVictoire = "Le joueur a remporté la partie!\n";
-        } else if (ordinateurGagnant){
+        } else if (ordinateur){
             messageVictoire = "L'ordinateur a remporté la partie!\n";
         }
         return messageVictoire;

@@ -8,14 +8,9 @@ public enum Difficulte {
     INTERMEDIAIRE(2),
     DIFFICILE(3);
 
-    private final int difficulte;
+    private int _difficulte;
 
     Difficulte(int _difficulte) {
-        this.difficulte = _difficulte;
+        this._difficulte = _difficulte;
     }
-
-    public int getDifficulte() {
-        return difficulte;
-    }
-
 }

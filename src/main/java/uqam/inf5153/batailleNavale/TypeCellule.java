@@ -1,5 +1,8 @@
 package uqam.inf5153.batailleNavale;
 
+/**
+ * Cette énumération relate les différents états qu'une cellulle peut avoir.
+ */
 public enum TypeCellule {
     NAVIREINTACT('N'),
     NAVIRETOUCHE('o'),
@@ -9,7 +12,6 @@ public enum TypeCellule {
     BOMBE('!');
 
     private final char icone;
-    private boolean tiree;
 
     TypeCellule(char icone) {
         this.icone = icone;
@@ -17,13 +19,5 @@ public enum TypeCellule {
 
     public char getIcone() {
         return icone;
-    }
-
-    public void setTiree(boolean tiree) {
-        this.tiree = tiree;
-    }
-
-    public boolean isTiree() {
-        return tiree;
     }
 }

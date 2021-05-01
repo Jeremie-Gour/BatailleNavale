@@ -167,7 +167,7 @@ class OceanTest {
     void celluleDeNavireIntactesDispoTest1() {
         Ocean oceanOrdinateur = new Ocean();
         oceanOrdinateur.placerNaviresAleatoirement();
-        assertTrue(oceanOrdinateur.celluleDeNavireIntactesDispo());
+        assertTrue(oceanOrdinateur.resteDesNavires());
     }
 
     // Test quand il ne reste plus de navires à couler
@@ -184,6 +184,6 @@ class OceanTest {
                 oceanOrdinateur.tirer(new Coordonnee(i, j));
             }
         }
-        assertFalse(oceanOrdinateur.celluleDeNavireIntactesDispo());
+        assertFalse(oceanOrdinateur.resteDesNavires());
     }
 }

@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Cette classe contient tous les différents navires qui constituent une flotte.
+ * Cette classe crée une flotte qui contient tous les différents navires à poser sur la grille de jeu.
  */
 public class Flotte {
-    List<Navire> listeNavires = new ArrayList<>();
+    private List<Navire> listeNavires = new ArrayList<>();
 
     public Flotte() {
-        listeNavires.add(new ContreTorpilleur(TypeNavire.CONTRETORPILLEUR));
-        listeNavires.add(new ContreTorpilleur(TypeNavire.CONTRETORPILLEUR));
-        listeNavires.add(new Croiseur(TypeNavire.CROISEUR));
-        listeNavires.add(new PorteAvions(TypeNavire.PORTEAVIONS));
-        listeNavires.add(new Torpilleur(TypeNavire.TORPILLEUR));
+        listeNavires.add(new Navire(TypeNavire.CONTRETORPILLEUR));
+        listeNavires.add(new Navire(TypeNavire.CONTRETORPILLEUR));
+        listeNavires.add(new Navire(TypeNavire.CROISEUR));
+        listeNavires.add(new Navire(TypeNavire.PORTEAVIONS));
+        listeNavires.add(new Navire(TypeNavire.TORPILLEUR));
+    }
+
+    public List<Navire> getListeNavires() {
+        return listeNavires;
     }
 }

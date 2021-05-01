@@ -11,7 +11,7 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;
 import static uqam.inf5153.batailleNavale.TypeNavire.CONTRETORPILLEUR;
 
-class MessageTest {
+class SaisieTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @BeforeEach
@@ -28,7 +28,7 @@ class MessageTest {
         ByteArrayInputStream input = new ByteArrayInputStream("texte".getBytes());
         System.setIn(input);
 
-        assertEquals("texte", Message.typeDocument());
+        assertEquals("texte", Saisie.saisirTypeDocument());
         System.setIn(save);
     }
 
@@ -38,7 +38,7 @@ class MessageTest {
         ByteArrayInputStream input = new ByteArrayInputStream("3".getBytes());
         System.setIn(input);
 
-        assertEquals(Difficulte.DIFFICILE, Message.choisirDifficulte());
+        assertEquals(Difficulte.DIFFICILE, Saisie.saisirNiveauDifficulte());
 
         System.setIn(save);
 
@@ -50,7 +50,7 @@ class MessageTest {
         ByteArrayInputStream input = new ByteArrayInputStream("non".getBytes());
         System.setIn(input);
 
-        assertFalse(Message.avecBombe());
+        assertFalse(Saisie.avecBombe());
 
         System.setIn(save);
     }
@@ -61,7 +61,7 @@ class MessageTest {
         ByteArrayInputStream input = new ByteArrayInputStream("E5".getBytes());
         System.setIn(input);
 
-        assertEquals(new Coordonnee(5,4), Message.saisirBombe());
+        assertEquals(new Coordonnee(5,4), Saisie.saisirBombe());
 
         System.setIn(save);
     }
@@ -72,7 +72,7 @@ class MessageTest {
         ByteArrayInputStream input = new ByteArrayInputStream("A5V".getBytes());
         System.setIn(input);
 
-        assertEquals("A5V", Message.saisirNavire(new Navire(CONTRETORPILLEUR)));
+        assertEquals("A5V", Saisie.saisirNavire(new Navire(CONTRETORPILLEUR)));
         System.setIn(save);
     }
 
@@ -82,7 +82,7 @@ class MessageTest {
         ByteArrayInputStream input = new ByteArrayInputStream("V".getBytes());
         System.setIn(input);
 
-        assertEquals(Alignement.VERTICAL, Message.saisirAlignement('V'));
+        assertEquals(Alignement.VERTICAL, Saisie.determinerAlignement('V'));
 
         System.setIn(save);
     }
@@ -93,18 +93,18 @@ class MessageTest {
         ByteArrayInputStream input = new ByteArrayInputStream("B4".getBytes());
         System.setIn(input);
 
-        assertEquals(new Coordonnee(4,1), Message.saisirTir());
+        assertEquals(new Coordonnee(4,1), Saisie.saisirTir());
         System.setIn(save);
     }
 
     // Vérifie le changement d'un char à une Colonne
     @Test public void stringToColonneTest(){
-        assertEquals(3,Message.stringToColonne('D'));
+        assertEquals(3,Colonne.stringToColonne('D'));
     }
 
     // Vérifie le gagnant
     @Test public void afficherGagnantTest(){
-        assertEquals("Le joueur a remporté la partie!\n",Message.afficherGagnant(true,false));
+        assertEquals("Le joueur a remporté la partie!\n", Saisie.afficherGagnant(true,false));
     }
 
 }
