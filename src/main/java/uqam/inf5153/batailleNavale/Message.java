@@ -151,11 +151,14 @@ public class Message {
         return colonne.getColonne();
     }
 
-    public static void afficherGagnant(boolean humainGagnant, boolean ordinateurGagnant) {
-        if (!humainGagnant) {
-            System.out.println("Le joueur a remporté la partie!\n");
-        } else {
-            System.out.println("L'ordinateur a remporté la partie!\n");
+    public static String afficherGagnant(boolean humainGagnant, boolean ordinateurGagnant) {
+        String messageVictoire = null;
+        if (humainGagnant) {
+
+            messageVictoire = "Le joueur a remporté la partie!\n";
+        } else if (ordinateurGagnant){
+            messageVictoire = "L'ordinateur a remporté la partie!\n";
         }
+        return messageVictoire;
     }
 }

@@ -126,7 +126,7 @@ public class Partie {
 
 
         }
-        Message.afficherGagnant(oceanHumain.celluleDeNavireIntactesDispo(), oceanOrdinateur.celluleDeNavireIntactesDispo());
+        System.out.println(Message.afficherGagnant(oceanHumain.celluleDeNavireIntactesDispo(), oceanOrdinateur.celluleDeNavireIntactesDispo()));
     }
 
 

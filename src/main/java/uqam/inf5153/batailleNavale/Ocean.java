@@ -14,8 +14,6 @@ public class Ocean {
     int cellulesOccupeesParBateau = 0;
     int cellulesDeNavireIntactes = calculerNombreTirsRestants();
 
-
-
     private Cellule[][] ocean;
 
     public void setOcean(Cellule[][] ocean) {
@@ -25,7 +23,6 @@ public class Ocean {
     public Cellule[][] getOcean() {
         return ocean;
     }
-
 
 
     /**
@@ -315,7 +312,7 @@ public class Ocean {
                             // Regarde a gauche et a droite
                             // Si la colonne est la limite de gauche:
                             if (colonne == 0) {
-                                if (!ocean[rangee + i][colonne + 1].estOccupeeParNavire()) {
+                                if (ocean[rangee + i][colonne + 1].estOccupeeParNavire()) {
                                     estEmplacementValide = false;
                                     break;
                                 }
