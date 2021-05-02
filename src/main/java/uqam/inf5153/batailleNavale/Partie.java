@@ -91,6 +91,10 @@ public class Partie {
         boolean humainBombe = false;
         boolean ordinateurBombe = false;
         while (oceanHumain.resteDesNavires() && oceanOrdinateur.resteDesNavires()) {
+            System.out.println("ca c a toi");
+            oceanHumain.afficherOcean();
+            System.out.println("tire sur ca");
+            oceanOrdinateur.afficherOcean();
 
             if (!humainBombe) {
                 Coordonnee coordonneeNavireHumain = Saisie.saisirTir();
@@ -101,10 +105,11 @@ public class Partie {
                 if (celluleJoueurHumain == TypeCellule.BOMBE) {
                     humainBombe = true;
                     System.out.println(BOMBETOUCHE);
-                } else {
-                    humainBombe = false;
                 }
                 oceanOrdinateur.afficherOceanMasque();
+            } else {
+                humainBombe = false;
+
             }
 
             //if bombe passe le tour
@@ -116,9 +121,9 @@ public class Partie {
                 if (celluleOrdinateur == TypeCellule.BOMBE) {
                     ordinateurBombe = true;
                     System.out.println(BOMBETOUCHE);
-                } else {
-                    ordinateurBombe = false;
                 }
+            } else {
+                ordinateurBombe = false;
             }
             ordinateur.recevoirResultat(celluleOrdinateur);
 
