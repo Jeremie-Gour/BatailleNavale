@@ -9,6 +9,8 @@ import java.util.Random;
  * Cette classe contient toutes les fonctions nécessaires pour jouer une partie de Bataille Navale.
  */
 public class Partie {
+    private final String COORDONNEEINVALIDE = "Vous ne pouvez pas placer un bateau à ces coordonnées.";
+    private final String BOMBETOUCHE = "Touché une bombe, passe le tour";
 
 
     public void jouerPartie() {
@@ -65,7 +67,7 @@ public class Partie {
                     oceanHumain.placerNavire(coordonneeNavire, alignementNavire, navire);
                     oceanHumain.afficherOcean();
                 } else {
-                    System.out.println("Vous ne pouvez pas placer un bateau à ces coordonnées.");
+                    System.out.println(COORDONNEEINVALIDE);
                 }
 
             } while(!placeNavire);
@@ -92,7 +94,7 @@ public class Partie {
                 celluleJoueurHumain = oceanOrdinateur.tirer(coordonneeNavireHumain);
                 if (celluleJoueurHumain == TypeCellule.BOMBE) {
                     humainBombe = true;
-                    System.out.println("Touché une bombe, passe le tour");
+                    System.out.println(BOMBETOUCHE);
                 } else {
                     humainBombe = false;
                 }
@@ -106,7 +108,7 @@ public class Partie {
                 celluleOrdinateur = oceanOrdinateur.tirer(coordonneeNavireOrdinateur);
                 if (celluleOrdinateur == TypeCellule.BOMBE) {
                     ordinateurBombe = true;
-                    System.out.println("Touché une bombe, passe le tour");
+                    System.out.println(BOMBETOUCHE);
                 } else {
                     ordinateurBombe = false;
                 }

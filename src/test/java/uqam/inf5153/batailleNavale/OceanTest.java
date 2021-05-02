@@ -8,21 +8,27 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test les méthodes de la classe Ocean.
+ */
+
 class OceanTest {
 
     private static final int TAILLE_HORIZONTALE_MAX = 10;
     private static final int TAILLE_VERTICALE_MAX = 10;
-
     private final ByteArrayOutputStream outputSave = new ByteArrayOutputStream();
 
+    /**
+     * Attrape les outputs de chaque test.
+     */
     @BeforeEach
     void setUp() {
-        // Attrape les outputs
         System.setOut(new PrintStream(outputSave));
     }
 
-
-    // Vérifie la création d'un océan
+    /**
+     * Test la création d'un océan.
+     */
     @Test
     public void creationOceanTest() {
         Ocean oceanHumain = new Ocean();
@@ -33,26 +39,42 @@ class OceanTest {
         }
     }
 
-    // Vérifie l'affichage d'un océan
+    /**
+     * Vérifie l'affichage d'un océan.
+     * (Test deux string différents car le output peut différer selon la machine)
+     */
     @Test public void afficherOceanTest(){
-
         Ocean oceanHumain = new Ocean();
-        String test = "0 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "1 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "2 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "3 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "4 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "5 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "6 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "7 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "8 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
-                      "9 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+        String test1 = "0 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "1 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "2 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "3 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "4 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "5 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "6 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "7 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "8 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                      "9 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
                       "    A B C D E F G H I J";
+        String test2 = "0 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\n" +
+                "1 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "2 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "3 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "4 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "5 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "6 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "7 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "8 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "9 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
+                "    A B C D E F G H I J";
         oceanHumain.afficherOcean();
-        assertEquals(test,outputSave.toString().trim());
+        assertTrue(outputSave.toString().trim().equals(test1) ||
+                outputSave.toString().trim().equals(test2));
     }
 
-    // Vérifie le placage des bateaux par l'ordinateur
+    /**
+     * Vérifie le placement des bateaux aleatoirement par l'ordinateur.
+     */
     @Test public void placerNaviresAleatoirementTest(){
         Ocean oceanOrdinateur = new Ocean();
         oceanOrdinateur.placerNaviresAleatoirement();
@@ -67,21 +89,27 @@ class OceanTest {
         assertEquals(17 , nbrCasesNavireIntact);
     }
 
-    // Vérifie un emplacement valide pour placer un bateau
+    /**
+     *  Vérifie un emplacement valide pour placer un bateau.
+     */
     @Test
     void verifierBateauTest1() {
         Ocean oceanHumain = new Ocean();
         assertTrue(oceanHumain.verifierBateau(new Coordonnee(0,0), Alignement.VERTICAL,new Navire(TypeNavire.PORTEAVIONS)));
     }
 
-    // Vérifie un emplacement non-valide qui va dépasser les bordures
+    /**
+     *  Vérifie un emplacement non-valide qui va dépasser les bordures.
+     */
     @Test
     void verifierBateauTest2() {
         Ocean oceanHumain = new Ocean();
         assertFalse(oceanHumain.verifierBateau(new Coordonnee(9,0), Alignement.VERTICAL,new Navire(TypeNavire.PORTEAVIONS)));
     }
 
-    // Vérifie un emplacement non-valide qui est collé à un autre bateau
+    /**
+     * Vérifie un emplacement non-valide qui est collé à un autre bateau
+     */
     @Test
     void verifierBateauTest3() {
         Ocean oceanHumain = new Ocean();
@@ -89,7 +117,9 @@ class OceanTest {
         assertFalse(oceanHumain.verifierBateau(new Coordonnee(0,1), Alignement.VERTICAL,new Navire(TypeNavire.PORTEAVIONS)));
     }
 
-    // Vérifie le placement vertical d'un navire dans l'océan
+    /**
+     * Vérifie le placement vertical d'un navire dans l'océan.
+     */
     @Test
     void placerNavireTest1() {
         Ocean oceanHumain = new Ocean();
@@ -101,7 +131,9 @@ class OceanTest {
         assertEquals(TypeCellule.NAVIREINTACT, oceanHumain.getOcean()[4][0].typeCellule);
     }
 
-    // Vérifie le placement horizontal d'un navire dans l'océan
+    /**
+     * Vérifie le placement horizontal d'un navire dans l'océan.
+     */
     @Test
     void placerNavireTest2() {
         Ocean oceanHumain = new Ocean();
@@ -113,7 +145,9 @@ class OceanTest {
         assertEquals(TypeCellule.NAVIREINTACT, oceanHumain.getOcean()[0][4].typeCellule);
     }
 
-    // Test tirer dans l'eau et le changement du typeCellule EAU à NAVIRERATE
+    /**
+     * Test tirer dans l'eau et le changement du typeCellule EAU à NAVIRERATE.
+     */
     @Test
     void tirerTest1() {
         Ocean oceanOrdinateur = new Ocean();
@@ -121,7 +155,9 @@ class OceanTest {
         assertEquals(TypeCellule.NAVIRERATE, oceanOrdinateur.getOcean()[5][5].typeCellule);
     }
 
-    // Test tirer sur un navire et le changement du typeCellule NAVIREINTACT à NAVIRETOUCHE
+    /**
+     * Test tirer sur un navire et le changement du typeCellule NAVIREINTACT à NAVIRETOUCHE.
+     */
     @Test
     void tirerTest2() {
         Ocean oceanOrdinateur = new Ocean();
@@ -130,7 +166,9 @@ class OceanTest {
         assertEquals(TypeCellule.NAVIRETOUCHE, oceanOrdinateur.getOcean()[0][0].typeCellule);
     }
 
-    // Test tirer sur une bombe et le changement du typeCellule BOMBE à NAVIRERATE
+    /**
+     * Test tirer sur une bombe et le changement du typeCellule BOMBE à NAVIRERATE
+     */
     @Test
     void tirerTest3() {
         Ocean oceanOrdinateur = new Ocean();
@@ -139,7 +177,9 @@ class OceanTest {
         assertEquals(TypeCellule.NAVIRERATE, oceanOrdinateur.getOcean()[0][0].typeCellule);
     }
 
-    // Test placer une bombe à un emplacement valide
+    /**
+     * Test placer une bombe à un emplacement valide.
+     */
     @Test
     void placerBombeTest1() {
         Ocean oceanHumain = new Ocean();
@@ -147,14 +187,18 @@ class OceanTest {
         assertEquals(TypeCellule.BOMBE,oceanHumain.getOcean()[0][0].typeCellule);
     }
 
-    // Test placer une bombe à un emplacement invalide à l'extérieur de l'océan
+    /**
+     * Test placer une bombe à un emplacement invalide à l'extérieur de l'océan.
+     */
     @Test
     void placerBombeTest2() {
         Ocean oceanHumain = new Ocean();
         assertFalse(oceanHumain.placerBombe(new Coordonnee(15,0)));
     }
 
-    // Test placer une bombe à un emplacement invalide qui est déjà occupé
+    /**
+     * Test placer une bombe à un emplacement invalide qui est déjà occupé.
+     */
     @Test
     void placerBombeTest3() {
         Ocean oceanHumain = new Ocean();
@@ -162,7 +206,9 @@ class OceanTest {
         assertFalse(oceanHumain.placerBombe(new Coordonnee(0,0)));
     }
 
-    // Test s'il reste des navires qui ne sont pas coulésgi
+    /**
+     * Test s'il reste des navires qui ne sont pas coulés.
+     */
     @Test
     void resteDesNaviresTest1() {
         Ocean oceanOrdinateur = new Ocean();
@@ -170,7 +216,9 @@ class OceanTest {
         assertTrue(oceanOrdinateur.resteDesNavires());
     }
 
-    // Test quand il ne reste plus de navires à couler
+    /**
+     * Test s'il ne reste plus de navires à couler.
+     */
     @Test
     void resteDesNaviresTest2() {
         Ocean oceanOrdinateur = new Ocean();

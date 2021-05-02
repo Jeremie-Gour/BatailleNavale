@@ -7,6 +7,20 @@ import static java.lang.Character.*;
  * Cette classe contient toutes les méthodes de saisie et de validation.
  */
 public class Saisie {
+    private static final String DOCUMENT1 = "Quel type de document voulez-vous pour sauvegarder l'historique de la partie? ";
+    private static final String DOCUMENT2 = "(texte, xml ou json)";
+    private static final String DOCUMENTINVALIDE = "Veuillez entrer un type de document valide.";
+    private static final String DIFFICULTE = "Choisissez le niveau de difficulté (1=facile, 2=intérmediaire ou 3=difficile";
+    private static final String DIFFICULTEINVALIDE = "Veuillez entrer une difficulté valide.";
+    private static final String AVECBOMBE = "Voulez-vous jouer avec des bombes? (oui ou non)";
+    private static final String AVECBOMBEINVALIDE = "Veuillez entrer une réponse valide.";
+    private static final String BOMBE = "Veuillez entrer les coordonnées de la bombe. Exemple: E5";
+    private static final String COORDONNEEINVALIDE = "Veuillez entrer des coordonnées valides.";
+    private static final String NAVIRE1 = "Veuillez entrer les coordonnées de la proue du ";
+    private static final String NAVIRE2 = " et son alignement (H:horizontal vers l'est ou V:vertical vers le sud). Exemple: A5V";
+    private static final String TIR = "Veuillez entrer la coordonnée de votre tir. Exemple: B4";
+    private static final String VICTOIREJOUEUR = "Le joueur a remporté la partie!\n";
+    private static final String VICTOIREORDINATEUR = "L'ordinateur a remporté la partie!\n";
 
     /**
      * Saisie et valide le type de document qui contient les messages affichés à la console.
@@ -17,8 +31,7 @@ public class Saisie {
         boolean inputValide = false;
         while (!inputValide) {
             Scanner scan = new Scanner(System.in);
-            System.out.println("Quel type de document voulez-vous pour sauvegarder l'historique de la partie? " +
-                    "(texte, xml ou json)");
+            System.out.println( DOCUMENT1 + DOCUMENT2);
             type = scan.nextLine();
             switch (type){
                 case "texte":
@@ -27,7 +40,7 @@ public class Saisie {
                     inputValide = true;
                     break;
                 default:
-                    System.out.println("Veuillez entrer un type de document valide.");
+                    System.out.println(DOCUMENTINVALIDE);
                     break;
             }
         }
@@ -44,7 +57,7 @@ public class Saisie {
         boolean inputValide = false;
         while (!inputValide) {
             Scanner scan = new Scanner(System.in);
-            System.out.println("Choisissez le niveau de difficulté (1=facile, 2=intérmediaire ou 3=difficile");
+            System.out.println(DIFFICULTE);
             difficulteSaisie = scan.nextLine();
             switch (difficulteSaisie) {
                 case "1":
@@ -60,7 +73,7 @@ public class Saisie {
                     inputValide = true;
                     break;
                 default:
-                    System.out.println("Veuillez entrer une difficulté valide.");
+                    System.out.println(DIFFICULTEINVALIDE);
                     break;
             }
         }
@@ -76,7 +89,7 @@ public class Saisie {
         boolean inputValide = false;
         while (!inputValide) {
             Scanner scan = new Scanner(System.in);
-            System.out.println("Voulez-vous jouer avec des bombes? (oui ou non)");
+            System.out.println(AVECBOMBE);
             String bombes = scan.nextLine();
             if (bombes.equals("oui")) {
                 avecBombe = true;
@@ -84,7 +97,7 @@ public class Saisie {
             } else if (bombes.equals("non")) {
                 inputValide = true;
             } else {
-                System.out.println("Veuillez entrer une réponse valide.");
+                System.out.println(AVECBOMBEINVALIDE);
             }
         }
         return avecBombe;
@@ -100,13 +113,13 @@ public class Saisie {
 
         while(!inputValide) {
             Scanner scan = new Scanner(System.in);
-            System.out.println("Veuillez entrer les coordonnées de la bombe. Exemple: E5");
+            System.out.println(BOMBE);
             bombe = scan.nextLine();
 
             if(bombe.length() == 2 && isDigit(bombe.charAt(1)) && bombe.charAt(0) >= 'A' && bombe.charAt(0) <= 'J'){
                 inputValide = true;
             }else{
-                System.out.println("Veuillez entrer des coordonnées valides.");
+                System.out.println(COORDONNEEINVALIDE);
             }
         }
         return new Coordonnee(Integer.parseInt(String.valueOf(bombe.charAt(1))), Colonne.stringToColonne(bombe.charAt(0)));
@@ -124,14 +137,13 @@ public class Saisie {
 
         while(!inputValide) {
             Scanner scan = new Scanner(System.in);
-            System.out.println("Veuillez entrer les coordonnées de la proue du " + navire.getTypeNavire() +
-                    " et son alignement (H:horizontal vers l'est ou V:vertical vers le sud). Exemple: A5V");
+            System.out.println(NAVIRE1 + navire.getTypeNavire() + NAVIRE2);
             bateau = scan.nextLine();
             if(bateau.length() == 3 && isDigit(bateau.charAt(1)) && bateau.charAt(0) >= 'A' && bateau.charAt(0) <= 'J' &&
                     (bateau.charAt(2) == 'H' || bateau.charAt(2) == 'V')) {
                 inputValide = true;
             } else {
-                System.out.println("Veuillez entrer des coordonnées valides.");
+                System.out.println(COORDONNEEINVALIDE);
             }
         }
         return bateau;
@@ -161,12 +173,12 @@ public class Saisie {
         boolean inputValide = false;
         while (!inputValide) {
             Scanner scan = new Scanner(System.in);
-            System.out.println("Veuillez entrer la coordonnée de votre tir. Exemple: B4");
+            System.out.println(TIR);
             tir = scan.nextLine();
             if(tir.length() == 2 && isDigit(tir.charAt(1)) && tir.charAt(0) >= 'A' && tir.charAt(0) <= 'J') {
                 inputValide = true;
             } else {
-                System.out.println("Veuillez entrer des coordonnées valides.");
+                System.out.println(COORDONNEEINVALIDE);
             }
         }
         return new Coordonnee(Integer.parseInt(String.valueOf(tir.charAt(1))), Colonne.stringToColonne(tir.charAt(0)));
@@ -181,9 +193,9 @@ public class Saisie {
     public static String afficherGagnant(boolean humain, boolean ordinateur) {
         String messageVictoire = null;
         if (humain) {
-            messageVictoire = "Le joueur a remporté la partie!\n";
+            messageVictoire = VICTOIREJOUEUR;
         } else if (ordinateur){
-            messageVictoire = "L'ordinateur a remporté la partie!\n";
+            messageVictoire = VICTOIREORDINATEUR;
         }
         return messageVictoire;
     }

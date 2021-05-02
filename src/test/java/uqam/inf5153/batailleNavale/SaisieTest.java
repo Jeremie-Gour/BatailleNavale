@@ -11,17 +11,23 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;
 import static uqam.inf5153.batailleNavale.TypeNavire.CONTRETORPILLEUR;
 
+/**
+ * Test les méthodes de la classe Saisie.
+ */
 class SaisieTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
+    /**
+     * Attrape les outputs de chaque test.
+     */
     @BeforeEach
     void setUp() {
-        // Attrape les outputs
         System.setOut(new PrintStream(outputStreamCaptor));
     }
 
-    // Vérifie le choix de document
-
+    /**
+     * Test la saisie du choix de document.
+     */
     @Test
     public void typeDocumentTest(){
         InputStream save = System.in;
@@ -32,7 +38,9 @@ class SaisieTest {
         System.setIn(save);
     }
 
-    // Vérifie la sélection de la difficulté
+    /**
+     * Test la saisie de la difficulté.
+     */
     @Test public void choisirDifficulteTest(){
         InputStream save = System.in;
         ByteArrayInputStream input = new ByteArrayInputStream("3".getBytes());
@@ -44,7 +52,9 @@ class SaisieTest {
 
     }
 
-    // Vérifie le choix de jouer avec des bombes
+    /**
+     * Test la saisie du choix de jouer avec des bombes.
+     */
     @Test public void avecBombeTest(){
         InputStream save = System.in;
         ByteArrayInputStream input = new ByteArrayInputStream("non".getBytes());
@@ -55,7 +65,9 @@ class SaisieTest {
         System.setIn(save);
     }
 
-    // Vérifie la saisie des coordonnées d'une bombe
+    /**
+     * Test la saisie des coordonnées d'une bombe.
+     */
     @Test public void saisirBombeTest(){
         InputStream save = System.in;
         ByteArrayInputStream input = new ByteArrayInputStream("E5".getBytes());
@@ -66,7 +78,9 @@ class SaisieTest {
         System.setIn(save);
     }
 
-    // Vérifie la saisie des coordonnées d'un navire
+    /**
+     * Test la saisie des coordonnées d'un navire.
+     */
     @Test public void saisirNavireTest(){
         InputStream save = System.in;
         ByteArrayInputStream input = new ByteArrayInputStream("A5V".getBytes());
@@ -76,7 +90,9 @@ class SaisieTest {
         System.setIn(save);
     }
 
-    // Vérifie le changement d'un char à Alignement
+    /**
+     * Test le changement du char représentant l'alignement à Alignement.
+     */
     @Test public void saisirAlignementTest(){
         InputStream save = System.in;
         ByteArrayInputStream input = new ByteArrayInputStream("V".getBytes());
@@ -87,7 +103,9 @@ class SaisieTest {
         System.setIn(save);
     }
 
-    // Vérifie la saisie des coordonnées d'un tir
+    /**
+     * Test la saisie des coordonnées d'un tir.
+     */
     @Test public void saisirTirTest(){
         InputStream save = System.in;
         ByteArrayInputStream input = new ByteArrayInputStream("B4".getBytes());
@@ -97,12 +115,9 @@ class SaisieTest {
         System.setIn(save);
     }
 
-    // Vérifie le changement d'un char à une Colonne
-    @Test public void stringToColonneTest(){
-        assertEquals(3,Colonne.stringToColonne('D'));
-    }
-
-    // Vérifie le gagnant
+    /**
+     * Test l'affichage du message de fin.
+     */
     @Test public void afficherGagnantTest(){
         assertEquals("Le joueur a remporté la partie!\n", Saisie.afficherGagnant(true,false));
     }
