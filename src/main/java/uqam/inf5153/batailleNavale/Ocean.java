@@ -53,6 +53,28 @@ public class Ocean {
         System.out.println();
     }
 
+    public void afficherOceanMasque() {
+        System.out.println();
+        for (int h = 0; h < TAILLE_HORIZONTALE_MAX; h++) {
+            System.out.print(h + " ");
+            System.out.print("| ");
+            for (int v = 0; v < TAILLE_VERTICALE_MAX; v++) {
+                if (ocean[h][v].typeCellule == TypeCellule.BOMBE || ocean[h][v].typeCellule == TypeCellule.NAVIREINTACT) {
+                    System.out.print(TypeCellule.EAU.getIcone() + " ");
+                } else {
+                    System.out.print(ocean[h][v].typeCellule.getIcone() + " ");
+                }
+            }
+            System.out.print('|');
+            System.out.println();
+        }
+        System.out.print("    ");
+        for (int i = 0; i < 10; i++) {
+            System.out.print(Character.toString('A' + i) + " ");
+        }
+        System.out.println();
+    }
+
 
     /**
      * Place tous les navires d'une flotte de façon aléatoire sur l'océan.
@@ -91,9 +113,9 @@ public class Ocean {
     /**
      * Vérifie le placement d'un navire.
      *
-     * @param coordonne Les coordonnées de la proue du navire
+     * @param coordonne  Les coordonnées de la proue du navire
      * @param alignement L'alignement du navire
-     * @param navire le navire
+     * @param navire     le navire
      * @return true si le positionnement est valide, false sinon
      */
     public boolean verifierBateau(Coordonnee coordonne, Alignement alignement, Navire navire) {
@@ -108,7 +130,7 @@ public class Ocean {
                 for (int i = 0; i < navire.getTypeNavire().getTaille(); i++) {
                     if (i == 0) {
                         if (colonne != 0) {
-                            if (ocean[rangee][colonne - 1].estOccupeeParNavire()) {
+                            if (ocean[rangee][colonne - 1].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
@@ -116,7 +138,7 @@ public class Ocean {
                     }
                     if (i == navire.getTypeNavire().getTaille() - 1) {
                         if (colonne != TAILLE_HORIZONTALE_MAX - 1) {
-                            if (ocean[rangee][colonne + i + 1].estOccupeeParNavire()) {
+                            if (ocean[rangee][colonne + i + 1].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
@@ -124,7 +146,7 @@ public class Ocean {
                     }
 
                     // Vérifie si la cellule est libre
-                    if (ocean[rangee][colonne + i].estOccupeeParNavire()) {
+                    if (ocean[rangee][colonne + i].estOccupee()) {
                         estEmplacementValide = false;
                         break;
 
@@ -132,18 +154,18 @@ public class Ocean {
                         // Regarde en haut et en bas
                         // Si la rangée est la limite supérieure:
                         if (rangee == 0) {
-                            if (ocean[rangee + 1][colonne + i].estOccupeeParNavire()) {
+                            if (ocean[rangee + 1][colonne + i].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
                             // Si la rangée est la limite inférieure
                         } else if (rangee == (TAILLE_HORIZONTALE_MAX - 1)) {
-                            if (ocean[rangee - 1][colonne + i].estOccupeeParNavire()) {
+                            if (ocean[rangee - 1][colonne + i].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
                         } else {
-                            if (ocean[rangee - 1][colonne + i].estOccupeeParNavire() || ocean[rangee + 1][colonne + i].estOccupeeParNavire()) {
+                            if (ocean[rangee - 1][colonne + i].estOccupee() || ocean[rangee + 1][colonne + i].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
@@ -163,7 +185,7 @@ public class Ocean {
 
                     if (i == 0) {
                         if (rangee != 0) {
-                            if (ocean[rangee - 1][colonne].estOccupeeParNavire()) {
+                            if (ocean[rangee - 1][colonne].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
@@ -171,7 +193,7 @@ public class Ocean {
                     }
                     if (i == navire.getTypeNavire().getTaille() - 1) {
                         if (colonne != TAILLE_VERTICALE_MAX - 1) {
-                            if (ocean[rangee + i + 1][colonne].estOccupeeParNavire()) {
+                            if (ocean[rangee + i + 1][colonne].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
@@ -179,7 +201,7 @@ public class Ocean {
                     }
 
                     // Vérifie si la cellule est libre
-                    if (ocean[rangee + i][colonne].estOccupeeParNavire()) {
+                    if (ocean[rangee + i][colonne].estOccupee()) {
                         estEmplacementValide = false;
                         break;
 
@@ -187,16 +209,16 @@ public class Ocean {
                         // Regarde a gauche et a droite
                         // Si la colonne est la limite de gauche:
                         if (colonne == 0) {
-                            if (ocean[rangee + i][colonne + 1].estOccupeeParNavire()) {
+                            if (ocean[rangee + i][colonne + 1].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
                         } else if (colonne == TAILLE_HORIZONTALE_MAX - 1) {
-                            if (ocean[rangee + i][colonne - 1].estOccupeeParNavire()) {
+                            if (ocean[rangee + i][colonne - 1].estOccupee()) {
                                 estEmplacementValide = false;
                                 break;
                             }
-                        } else if (ocean[rangee + i][colonne + 1].estOccupeeParNavire() || ocean[rangee + i][colonne - 1].estOccupeeParNavire()) {
+                        } else if (ocean[rangee + i][colonne + 1].estOccupee() || ocean[rangee + i][colonne - 1].estOccupee()) {
                             estEmplacementValide = false;
                             break;
                         }
@@ -271,7 +293,6 @@ public class Ocean {
         }
 
 
-        afficherOcean();
         return typeCellule;
     }
 

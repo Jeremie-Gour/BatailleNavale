@@ -27,33 +27,13 @@ public class Partie {
         boolean bombeValideHumain;
         boolean bombeValideOrdinateur;
 
-        // Placement des bombes
-        if (Saisie.avecBombe()) {
-            // Saisie et placement des bombes du joueur
-            int i = 0;
-            while (i < 5) {
-                Coordonnee coordonneeBombe = Saisie.saisirBombe();
-                bombeValideHumain = oceanHumain.placerBombe(coordonneeBombe);
-                if (bombeValideHumain) {
-                    i++;
-                }
-            }
-            // Placement des bombes de l'ordinateur
-            int j = 0;
-            while (j < 5) {
-                Random random = new Random();
-                Coordonnee coordonneeBombeOrdinateur = new Coordonnee(random.nextInt(10), random.nextInt(10));
-                bombeValideOrdinateur = oceanOrdinateur.placerBombe(coordonneeBombeOrdinateur);
-                if (bombeValideOrdinateur) {
-                    j++;
-                }
-            }
-        }
+        oceanHumain.afficherOcean();
+
+
 
         // Placement des navires du joueur
         for (Navire navire : oceanHumain.flotte.getListeNavires()) {
             boolean placeNavire;
-            oceanHumain.afficherOcean();
             do {
                 String positionNavire = Saisie.saisirNavire(navire);
                 Alignement alignementNavire = Saisie.determinerAlignement(positionNavire.charAt(2));
@@ -77,9 +57,34 @@ public class Partie {
         // Placement des navires de l'ordinateur
         oceanOrdinateur.placerNaviresAleatoirement();
 
+        // Placement des bombes
+        if (Saisie.avecBombe()) {
+            // Saisie et placement des bombes du joueur
+            int i = 0;
+            while (i < 5) {
+                Coordonnee coordonneeBombe = Saisie.saisirBombe();
+                bombeValideHumain = oceanHumain.placerBombe(coordonneeBombe);
+                if (bombeValideHumain) {
+                    oceanHumain.afficherOcean();
+                    i++;
+                } else {
+                    System.out.println("Cet espace est occupé.");
+                }
+            }
+            // Placement des bombes de l'ordinateur
+            int j = 0;
+            while (j < 5) {
+                Random random = new Random();
+                Coordonnee coordonneeBombeOrdinateur = new Coordonnee(random.nextInt(10), random.nextInt(10));
+                bombeValideOrdinateur = oceanOrdinateur.placerBombe(coordonneeBombeOrdinateur);
+                if (bombeValideOrdinateur) {
+                    j++;
+                }
+            }
+        }
         // On affiche l'océan
-        oceanHumain.afficherOcean();
-
+        System.out.println("Voici l'ocean de votre adversaire.");
+        oceanOrdinateur.afficherOceanMasque();
 
         // Boucle principale de jeu
         // Alterne de joueur en joueur jusqu'a temps qu'il y n'y a pas de gagnant
@@ -92,12 +97,14 @@ public class Partie {
 
                 //if bombe passe le tour
                 celluleJoueurHumain = oceanOrdinateur.tirer(coordonneeNavireHumain);
+
                 if (celluleJoueurHumain == TypeCellule.BOMBE) {
                     humainBombe = true;
                     System.out.println(BOMBETOUCHE);
                 } else {
                     humainBombe = false;
                 }
+                oceanOrdinateur.afficherOceanMasque();
             }
 
             //if bombe passe le tour
@@ -105,7 +112,7 @@ public class Partie {
                 Coordonnee coordonneeNavireOrdinateur = ordinateur.prochaineAttaque();
 
                 //if bombe passe le tour
-                celluleOrdinateur = oceanOrdinateur.tirer(coordonneeNavireOrdinateur);
+                celluleOrdinateur = oceanHumain.tirer(coordonneeNavireOrdinateur);
                 if (celluleOrdinateur == TypeCellule.BOMBE) {
                     ordinateurBombe = true;
                     System.out.println(BOMBETOUCHE);
