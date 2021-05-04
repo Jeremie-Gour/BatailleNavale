@@ -378,7 +378,7 @@ public class Ordinateur {
      * @param coordonnee  la coordonnée qu'on voudrait retirer s'il est dans la liste de coordonneDispobile
      */
     private void retirerCoordonne( Coordonnee coordonnee){
-        int celluleRetireIndex = this.coordonneesDisponibles.get( coordonnee.getRangee() ).indexOf(coordonnee);
+        int celluleRetireIndex = this.coordonneesDisponibles.get( coordonnee.getRangee() ).indexOf( coordonnee );
 
         this.coordonneesDisponibles.get( coordonnee.getRangee()).remove( celluleRetireIndex );
     }
@@ -398,7 +398,42 @@ public class Ordinateur {
     }
 
     /**
-     * Cette méthode pour aviser à l'ordinateur quel type de cellule a été attaquée . Dépendamment, de la difficulté de l'ordinateur, il est redirigé
+     * Cette méthode retire les voisins horizontal du coordonnée entrée dans les paramètres dans la liste coordonneesDisponibles et
+     * coordonneesDisponiblesIntelligent(s'il est la)
+     * @coordonnee qu'on veut retirer les voisins dans la liste des coordonnées disponibles
+     */
+    private void retirerVosinageIntelligentHor( Coordonnee coordonnee ) {
+        Coordonnee coordonneAlentour =  new Coordonnee( coordonnee.getRangee() , coordonnee.getColonne() );
+        coordonneAlentour.deplacerADroite();
+        if ( coordonneAlentour.getColonne() < TAILLE_VERTICALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
+            retirerCoordonnePossibleIntelligent( coordonneAlentour );
+        }
+        coordonneAlentour.deplacerAGauche(2);
+        if ( coordonneAlentour.getColonne() >= 0 && coordonneEstDisponible( coordonneAlentour ) ) {
+            retirerCoordonnePossibleIntelligent( coordonneAlentour );
+        }
+
+    }
+    /**
+     * Cette méthode retire les voisins vertical du coordonnée entrée dans les paramètres dans la liste coordonneesDisponibles et
+     * coordonneesDisponiblesIntelligent(s'il est la)
+     * @coordonnee qu'on veut retirer les voisins dans la liste des coordonnées disponibles
+     */
+    private void retirerVosinageIntelligentVer( Coordonnee coordonnee ) {
+        Coordonnee coordonneAlentour =  new Coordonnee( coordonnee.getRangee() , coordonnee.getColonne() );
+        coordonneAlentour.deplacerEnBas();
+        if ( coordonneAlentour.getRangee() >= 0 && coordonneEstDisponible( coordonneAlentour ) ) {
+            retirerCoordonnePossibleIntelligent( coordonneAlentour );
+        }
+        coordonneAlentour.deplacerEnHaut(2);
+        if ( coordonneAlentour.getRangee() < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
+            retirerCoordonnePossibleIntelligent( coordonneAlentour );
+        }
+
+    }
+
+    /**
+     * Cette méthode est pour aviser à l'ordinateur quel type de cellule a été attaquée . Dépendamment, de la difficulté de l'ordinateur, il est redirigé
      * à la méthode pour accomplir cette action selon la difficulté.
      * @param celluleTouche le type de cellule qui à été dans la dernière attaque
      */
@@ -410,7 +445,7 @@ public class Ordinateur {
         }
     }
     /**
-     * Cette méthode pour aviser à l'ordinateur intermédiaire quel type de cellule a été attaquée. Dépendamment, de la cellule attaquée et
+     * Cette méthode est pour aviser à l'ordinateur intermédiaire quel type de cellule a été attaquée. Dépendamment, de la cellule attaquée et
      * this.strategie, il modifiera la stratégie si le type de cellule attaquée nécessite de le faire.
      * @param celluleTouche le type de cellule qui à été touchée lors de la dernière attaque
      */
@@ -436,14 +471,13 @@ public class Ordinateur {
 
     }
     /**
-     * Cette méthode pour aviser à l'ordinateur difficile quel type de cellule a été attaquée. Dépendamment, de la cellule attaquée et this.stratégie,
+     * Cette méthode est pour aviser à l'ordinateur difficile quel type de cellule a été attaquée. Dépendamment, de la cellule attaquée et this.stratégie,
      * il modifiera la stratégie si le type de cellule attaquée nécessite de le faire. Ce qui différentie cette méthode de recevoirResultatIntermediaire()
      * est que lorsque le type attaqué est NAVIREINTACT, il va retirer les cellules voisins selon alignementRepere puisque le jeu ne permet pas d'avoir des
      * bateaux collés.
      * @param celluleTouche le type de cellule qui à été touchée lors de la dernière attaque
      */
     public void recevoirResultatIntelligent( TypeCellule celluleTouche ) {
-        Coordonnee coordonneAlentour = new Coordonnee( this.derniereCoordonneAttaque.getRangee() , this.derniereCoordonneAttaque.getColonne() );
         if ( this.strategie == Strategie.RECHERCHERBATEAU ) {
             if ( celluleTouche == TypeCellule.NAVIREINTACT ) {
                 coordonneePivot = new Coordonnee( this.derniereCoordonneAttaque.getRangee(), this.derniereCoordonneAttaque.getColonne() );
@@ -452,45 +486,11 @@ public class Ordinateur {
         } else if ( this.strategie == Strategie.CHERCHERALIGNEMENT ) {
             if ( celluleTouche == TypeCellule.NAVIREINTACT ) {
                 if ( this.alignementRepere == Alignement.VERTICAL ) {
-                    coordonneAlentour.deplacerEnBas();
-                    if ( coordonneAlentour.getRangee() >= 0 && coordonneEstDisponible(coordonneAlentour) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
-                    coordonneAlentour.deplacerEnHaut(2);
-                    if ( coordonneAlentour.getRangee() < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
-                    coordonneAlentour = coordonneePivot;
-                    coordonneAlentour.deplacerEnBas();
-
-                    if ( coordonneAlentour.getRangee() >= 0 && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
-
-                    coordonneAlentour.deplacerEnHaut(2);
-                    if ( coordonneAlentour.getRangee() < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent(coordonneAlentour);
-                    }
-
+                    retirerVosinageIntelligentVer(this.derniereCoordonneAttaque);
+                    retirerVosinageIntelligentVer(coordonneePivot);
                 } else if ( this.alignementRepere == Alignement.HORIZONTAL ) {
-
-                    coordonneAlentour.deplacerADroite();
-                    if ( coordonneAlentour.getColonne() < TAILLE_VERTICALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent(coordonneAlentour);
-                    }
-                    coordonneAlentour.deplacerAGauche(2);
-                    if ( coordonneAlentour.getColonne() >= 0 && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
-                    coordonneAlentour = coordonneePivot;
-                    coordonneAlentour.deplacerADroite();
-                    if ( coordonneAlentour.getColonne() < TAILLE_VERTICALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
-                    coordonneAlentour.deplacerAGauche(2);
-                    if ( coordonneAlentour.getColonne() >= 0 && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
+                    retirerVosinageIntelligentHor(this.derniereCoordonneAttaque);
+                    retirerVosinageIntelligentHor(coordonneePivot);
                 }
                 this.strategie = Strategie.SUIVREALIGNEMENT;
             }
@@ -499,23 +499,9 @@ public class Ordinateur {
                 this.strategie = Strategie.VERIFIERAUTREBOUT;
             } else if ( celluleTouche == TypeCellule.NAVIREINTACT ){
                 if ( this.alignementRepere == Alignement.VERTICAL ) {
-                    coordonneAlentour.deplacerEnBas();
-                    if ( coordonneAlentour.getRangee() >= 0 && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
-                    coordonneAlentour.deplacerEnHaut(2);
-                    if ( coordonneAlentour.getRangee() < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
+                    retirerVosinageIntelligentVer(this.derniereCoordonneAttaque);
                 } else if ( this.alignementRepere == Alignement.HORIZONTAL ) {
-                    coordonneAlentour.deplacerADroite();
-                    if ( coordonneAlentour.getColonne() < TAILLE_VERTICALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour) ;
-                    }
-                    coordonneAlentour.deplacerAGauche(2);
-                    if ( coordonneAlentour.getColonne() >= 0 && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent(coordonneAlentour);
-                    }
+                    retirerVosinageIntelligentHor(this.derniereCoordonneAttaque);
                 }
             }
         } else if (this.strategie == Strategie.VERIFIERAUTREBOUT) {
@@ -523,24 +509,9 @@ public class Ordinateur {
                 this.strategie = Strategie.RECHERCHERBATEAU;
             } else if ( celluleTouche == TypeCellule.NAVIREINTACT ) {
                 if ( this.alignementRepere == Alignement.VERTICAL ) {
-
-                    coordonneAlentour.deplacerEnBas();
-                    if ( coordonneAlentour.getRangee() >= 0 && coordonneEstDisponible(coordonneAlentour) ) {
-                        retirerCoordonnePossibleIntelligent(coordonneAlentour);
-                    }
-                    coordonneAlentour.deplacerEnHaut(2);
-                    if ( coordonneAlentour.getRangee() < TAILLE_HORIZONTALE_MAX && coordonneEstDisponible(coordonneAlentour) ) {
-                        retirerCoordonnePossibleIntelligent(coordonneAlentour);
-                    }
+                    retirerVosinageIntelligentVer(this.derniereCoordonneAttaque);
                 } else if (this.alignementRepere == Alignement.HORIZONTAL) {
-                    coordonneAlentour.deplacerADroite();
-                    if ( coordonneAlentour.getColonne() < TAILLE_VERTICALE_MAX && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent(coordonneAlentour);
-                    }
-                    coordonneAlentour.deplacerAGauche(2);
-                    if ( coordonneAlentour.getColonne() >= 0 && coordonneEstDisponible( coordonneAlentour ) ) {
-                        retirerCoordonnePossibleIntelligent( coordonneAlentour );
-                    }
+                    retirerVosinageIntelligentHor(this.derniereCoordonneAttaque);
                 }
             }
         }
