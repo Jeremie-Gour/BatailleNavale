@@ -34,7 +34,7 @@ class SaisieTest {
         ByteArrayInputStream input = new ByteArrayInputStream("texte".getBytes());
         System.setIn(input);
 
-        assertEquals("texte", Saisie.saisirTypeDocument());
+        assertEquals(TypeDocument.TEXTE, Saisie.saisirTypeDocument());
         System.setIn(save);
     }
 

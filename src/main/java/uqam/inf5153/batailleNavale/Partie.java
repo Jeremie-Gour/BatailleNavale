@@ -19,8 +19,15 @@ public class Partie {
         Ocean oceanHumain = new Ocean();
         Ocean oceanOrdinateur = new Ocean();
 
+        // Sélection du type de fichier pour sauvegarder la partie
+        TypeDocument typeDocument = Saisie.saisirTypeDocument();
+
+        // Commence la sauvegarde de la partie
+        TypeDocument.recording(typeDocument);
+
         // Sélection du niveau de difficulté
         Difficulte difficulte = Saisie.saisirNiveauDifficulte();
+
         Ordinateur ordinateur = new Ordinateur(difficulte);
 
         // On peut placer les bombes, mais il faut regarder pour les vérifications et tirer une bombe ne fait pas encore passer un tour.
@@ -134,25 +141,6 @@ public class Partie {
 
 
     public static void main(String[] args){
-
-
-        try
-        {
-            FileOutputStream fout= new FileOutputStream("stdout.xml");
-            FileOutputStream ferr= new FileOutputStream("stderr.log");
-
-            MultiOutputStream multiOut= new MultiOutputStream(System.out, fout);
-            MultiOutputStream multiErr= new MultiOutputStream(System.err, ferr);
-
-            PrintStream stdout= new PrintStream(multiOut);
-            PrintStream stderr= new PrintStream(multiErr);
-
-            System.setOut(stdout);
-            System.setErr(stderr);
-        }
-        catch (FileNotFoundException ex)
-        {
-        }
 
         Partie partie = new Partie();
         partie.jouerPartie();

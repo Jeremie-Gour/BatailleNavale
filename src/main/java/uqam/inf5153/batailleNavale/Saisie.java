@@ -26,8 +26,9 @@ public class Saisie {
      * Saisie et valide le type de document qui contient les messages affichés à la console.
      * @return le type de document
      */
-    public static String saisirTypeDocument() {
-        String type = null;
+    public static TypeDocument saisirTypeDocument() {
+        String type ;
+        TypeDocument typeDocument = null;
         boolean inputValide = false;
         while (!inputValide) {
             Scanner scan = new Scanner(System.in);
@@ -35,8 +36,15 @@ public class Saisie {
             type = scan.nextLine();
             switch (type){
                 case "texte":
+                    typeDocument = TypeDocument.TEXTE;
+                    inputValide = true;
+                    break;
                 case "xml":
+                    typeDocument = TypeDocument.XML;
+                    inputValide = true;
+                    break;
                 case "json":
+                    typeDocument = TypeDocument.JSON;
                     inputValide = true;
                     break;
                 default:
@@ -44,7 +52,7 @@ public class Saisie {
                     break;
             }
         }
-        return type;
+        return typeDocument;
     }
 
     /**
