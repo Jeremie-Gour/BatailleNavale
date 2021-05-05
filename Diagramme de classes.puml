@@ -1,103 +1,204 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class Affichage{
+
+package BatailleNavale{
+    enum Alignement{
+        HORIZONTAL
+        VERTICAL
+    }
+
+    class Cellule{
+         #TypeCellule typeCellule
+
+         + void estOccupeeParNavire()
+         + void estOccupee()
+    }
+
+    enum Colonne{
+           -colonne: Integer
+           A(0)
+           B(1)
+           C(2)
+           D(3)
+           E(4)
+           F(5)
+           G(6)
+           H(7)
+           I(8)
+           J(9)
+    }
+
+
+    class Coordonne{
+            -int: rangee
+            -int: colonne
+            + void deplacerEnbas()
+            +void deplacerEnBas(distance)
+            +void deplacerEnHaut()
+            +void deplacerEnHaut(distance)
+            +void deplacerAGauche(distance)
+              +void deplacerADroite(distance)
+              + boolean equals(Object objet)
+    }
+
+    enum Difficulte{
+        FACILE(1)
+        INTERMEDIAIRE(2)
+        DIFFICILE(3)
+        - difficulte: Integer
+    }
+
+    class Flotte{
+        - listeNavires: List<Navire>
+    }
+
+    class MultiOutputStream{
+        # outputStreams: Outputstream[]
+        +void write()
+        +flush()
+        +close()
+    }
+
+
+    class Navire{
+         +private typeNavire: TypeNavire
+    }
+
+    class Ocean{
+            -{static} TAILLE_HORIZONTALE_MAX: Integer = 10
+            -{static} TAILLE_HORIZONTALE_MAX: Integer = 10
+            #flotte: Flotte
+            + ocean: Cellule[][]
+           +void afficherOcean()
+            +void afficherOceanMasque()
+            +void placerNaviresAleatoirement()
+            +boolean verifierBateau()
+            +void placerNavire()
+            +TypeCellule tirer(Coordonnee coordonnee)
+            +boolean placerBombe(Coordonne coordonnee)
+    }
+
+    class Ordinateur{
+        -{static} TAILLE_HORIZONTALE_MAX: Integer = 10
+                    -{static} TAILLE_HORIZONTALE_MAX: Integer = 10
+                    - {static} alignementRepere: Alignement
+                    - {static} pas: Integer
+                    - {static} coordonnePivot: Coordonne
+        - coordonneesDisponiblesIntelligent: List<ArrayList<Coordonnee>>
+        - derniereCoordonneeAttaquee: Coordonne
+
+
+    }
+    class Partie{
+        +void jouerPartie()
+        +void Main()
+    }
+
+    class Saisie{
+        +{static} TypeDocument SaisirTypeDocument()
+        +{static} Difficulte saisirNiveauDifficulte()
+        +{static} boolean avecBombe()
+        +{static} Coordonnee saisirBombe()
+        +{static} String saisirNavire(Navire navire)
+        +{static} Alignement determinerAlignement(char alignement)
+        +{static} Coordonnee saisirTir()
+        +{static} afficherGagnant(boolean humain, boolean ordinateur)
+
+    }
+    enum Strategie{
+        RECHERCHERBATEAU
+        CHERCHERALIGNEMENT
+        SUIVREALIGNEMENT
+        VERIFIERAUTREBOUT
+    }
+
+    enum TypeCellule{
+        NAVIREINTACT('N')
+        NAVIRETOUCHE('o')
+        NAVIRECOULE('#')
+        NAVIRERATE('x')
+        EAU('~')
+        BOMBE('!')
+        -icon: Character
+    }
+
+    enum TypeDocument{
+        TEXTE("sauvegarde.txt")
+        XML("sauvegarde.xml")
+        JSON("sauvegarde.json")
+        -_typeDocument: String
+        +{static} void recording(TypeDocument typeDocument)
+    }
+    enum TypeNavire{
+        PORTEAVIONS(5)
+        CROISEUR(4)
+        CONTRETORPILLEUR(3)
+        TORPILLEUR(2)
+        - taille: Integer
+        +String toString()
+    }
+
 }
 
-enum Alignement{
+package Tests{
+class CelluleTest{
 }
 
-class Cellule{
+    class ColonneTest{
+    }
+
+    class OceanTest{
+    }
+
+    class OrdinateurTest{
+    }
+
+    class OrdinateurTest{
+    }
+
+    class SaisieTest{
+    }
 }
 
-enum Colonne{
-}
+Cellule "1" -- "1" Coordonne
 
-class ContreTorpilleur extends Navire{
-}
-
-class Coordonne{
-}
-
-class Croiseur extends Navire{
-}
-
-enum Difficulte{
-}
-
-class Flotte{
-}
-
-abstract class Joueur{
-}
-
-class JoueurHumain extends Joueur{
-}
-
-class JoueurOrdinateur extends Joueur{
-}
-
-class Navire{
-}
-
-class Ocean{
-}
+BatailleNavale -- Tests
 
 
-class Partie{
-}
+Partie "1" <-left-* "1" TypeDocument
 
-class PorteAvions extends Navire{
-}
+Strategie "1" <--* "1" Ordinateur
 
-abstract class Navire{
-}
+Partie ..right..> "uses" Saisie
 
-class Ocean{
-}
-
-class Partie{
-}
-
-class PorteAvions extends Navire{
-}
-
-class Torpilleur extends Navire{
-}
-
-enum TypeCellule{
-}
-
-
-
-enum TypeNavire{
-}
-
-Partie -- Affichage
+Ordinateur <.."uses" Partie
 
 Partie "1" --o "2" Ocean
 
-Partie "1" --o "2" Joueur
+Ocean -- Flotte
 
 
 Flotte "1" *-- "1..*" Navire
 
-Ocean -- TypeCellule
+Cellule "1" *--> "1" TypeCellule
 
-Ocean -- Colonne
 
 Ocean "1" *-- "1...*" Cellule
 
-Cellule "1" -- "1" Coordonne
+
+
+
+Colonne "1" <-left-* "1" Coordonne
 
 Ocean -- Navire
 
 
-Partie -- Difficulte
+Partie "1" <-up-* "1" Difficulte
 
-Navire -- TypeNavire
+Navire "1" *--> "1" TypeNavire
 
+MultiOutputStream -- Partie
 
-
-Navire *-- Alignement
+Navire -- Alignement
 @enduml

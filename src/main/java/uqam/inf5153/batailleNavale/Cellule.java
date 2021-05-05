@@ -4,7 +4,7 @@ package uqam.inf5153.batailleNavale;
  * Cette classe représente une cellule de la grille de jeu.
  */
 public class Cellule {
-    TypeCellule typeCellule;
+    protected TypeCellule typeCellule;
 
     public Cellule(TypeCellule typeCellule) {
         this.typeCellule = typeCellule;

@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Joueur as Joueur
+
+activate Joueur
+Joueur -> Main
+Main -> Partie: jouerPartie()
+Partie -> Ocean: Ocean()
+Ocean -> Partie: ocean
+Partie -> Saisie: saisirTypeDocument()
+Saisie --> Partie: typeDocument
+Partie -->TypeDocument: recording(typeDocument)
+Partie -> Saisie: saisirDifficulte()
+Saisie -> Partie: difficulte
+Partie -> Ordinateur: Ordinateur(difficulte)
+Ordinateur ->
+
+
+'boucle for pour saisir et placer les navires
+loop placerBateaux
+    Partie -> Ocean: placerNavire
+end
+
+Partie -> Ocean: placerNaviresAleatoirement()
+
+'alt si ya des bombes
+alt avecBombes
+end
+
+
+
+'Objets interessants: main, Partie, Ocean, Ordinateur,
+
+
+
+
+
+
+@enduml

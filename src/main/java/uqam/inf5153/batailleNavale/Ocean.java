@@ -8,10 +8,9 @@ import java.util.Random;
 public class Ocean {
     private static final int TAILLE_HORIZONTALE_MAX = 10;
     private static final int TAILLE_VERTICALE_MAX = 10;
-    int cellulesOccupeesParBateau = 0;
-    Flotte flotte = new Flotte();
+    protected Flotte flotte = new Flotte();
     private Cellule[][] ocean;
-    int cellulesDeNavireIntactes = calculerNombreTirsRestants();
+    private int cellulesDeNavireIntactes = calculerNombreTirsRestants();
 
 
     public Cellule[][] getOcean() {
@@ -255,7 +254,6 @@ public class Ocean {
                 ocean[coordonnees.getRangee() + i][coordonnees.getColonne()].typeCellule = TypeCellule.NAVIREINTACT;
             }
         }
-        cellulesOccupeesParBateau++;
     }
 
     /**
