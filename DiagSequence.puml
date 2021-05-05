@@ -30,13 +30,33 @@ Partie -> Ocean: afficherOcean()
 Ocean --> Partie: affiche l'ocean du joueur
 
 'boucle for pour saisir et placer les navires
-loop placerBateaux
-    Partie -> Ocean: placerNavire
+loop placer tous les navires de la flotte
+    Partie -> Saisie: saisirNavire(navire)
+        activate Saisie
+
+    Saisie --> Partie: coordonnées du navire
+    deactivate Saisie
+
+    alt coordonnées du navire valides
+    Partie -> Ocean: placerNavire()
+    Ocean -> Ocean: place le navire
+    Ocean --> Partie: affiche l'océan du joueur
+    end
+    alt positionInvalide
+    Partie -> Ocean: placerNavire()
+    Ocean --> Partie: placement invalide
+    Partie -> Partie: affiche message d'erreur
+    end
 end
 
 Partie -> Ocean: placerNaviresAléatoirement()
 Ocean -> Ocean: place les navires de l'ordi aléatoirement
 
+Partie -> Saisie: saisirAvecBombe()
+    activate Saisie
+
+Saisie --> Partie: retourne vrai si l'option bombe est implémentée
+deactivate Saisie
 'alt si ya des bombes
 alt avecBombes
 
