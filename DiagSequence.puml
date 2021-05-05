@@ -5,30 +5,90 @@ autonumber
 
 actor Joueur as Joueur
 
-activate Joueur
-Joueur -> Main
-Main -> Partie: jouerPartie()
-Partie -> Ocean: Ocean()
-Ocean -> Partie: ocean
-Partie -> Saisie: saisirTypeDocument()
-Saisie --> Partie: typeDocument
-Partie -->TypeDocument: recording(typeDocument)
-Partie -> Saisie: saisirDifficulte()
-Saisie -> Partie: difficulte
-Partie -> Ordinateur: Ordinateur(difficulte)
-Ordinateur ->
 
+activate Joueur
+Joueur -> Main: commence la partie
+activate Main
+
+Main -> Partie: jouerPartie()
+activate Partie
+
+Partie -> Ocean: Ocean()
+activate Ocean
+Ocean --> Partie: oceanJoueur,oceanOrdinateur
+Partie -> Saisie: saisirDifficulte()
+activate Saisie
+
+Saisie --> Partie: difficulte
+deactivate Saisie
+
+Partie -> Ordinateur: Ordinateur(difficulte)
+activate Ordinateur
+Ordinateur --> Partie: ordinateur(difficulte)
+
+Partie -> Ocean: afficherOcean()
+Ocean --> Partie: affiche l'ocean du joueur
 
 'boucle for pour saisir et placer les navires
 loop placerBateaux
     Partie -> Ocean: placerNavire
 end
 
-Partie -> Ocean: placerNaviresAleatoirement()
+Partie -> Ocean: placerNaviresAléatoirement()
+Ocean -> Ocean: place les navires de l'ordi aléatoirement
 
 'alt si ya des bombes
 alt avecBombes
+
+loop placement des 5 bombes du joueur
+    Partie -> Saisie: saisirBombe()
+    activate Saisie
+    Saisie --> Partie: positionBombe
+    deactivate Saisie
+    alt positionBombeValide
+     Partie -> Ocean: placerBombe()
+     Ocean -> Ocean: place la bombe
+     Ocean --> Partie: afficherOcean()
+    end
+    alt positionInvalide
+        Partie -> Ocean: placerBombe()
+        Ocean --> Partie: placement invalide
+        Partie -> Partie: affiche message d'erreur
+     end
 end
+loop placement des bombes de l'ordinateur
+    Partie -> Ocean: placerBombe()
+    Ocean -> Ocean: placerBombe()
+end
+end
+
+
+loop tant qu'il n'y a pas de gagnant
+    Partie -> Ocean: oceanOrdinateur.afficherOceanMasque()
+    Ocean --> Partie: affiche l'ocean masqué de l'ordinateur
+    Partie -> Saisie: saisirTir()
+        activate Saisie
+
+    Saisie --> Partie: coordonnées du tir
+    deactivate Saisie
+    Partie -> Ocean: placerTirDuJoueur()
+    alt tire sur une bombe
+    Ocean --> Partie: joueur passe le prochain tour
+    end
+    Partie -> Ocean: placerTirDeLordinateur()
+    alt tire sur une bombe
+    Ocean --> Partie: joueur passe le prochain tour
+    end
+    Partie -> Ordinateur: enregistre resultat du dernier tir
+end
+deactivate Ordinateur
+deactivate Ocean
+Partie --> Main: affiche le gagnant de la partie
+deactivate Partie
+deactivate Main
+deactivate Joueur
+
+
 
 
 

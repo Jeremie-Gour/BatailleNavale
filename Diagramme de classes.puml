@@ -176,7 +176,7 @@ Ordinateur <.."uses" Partie
 
 Partie "1" --o "2" Ocean
 
-Ocean -- Flotte
+Ocean -- "une flotte est sur l'ocean" Flotte
 
 
 Flotte "1" *-- "1..*" Navire
@@ -191,14 +191,13 @@ Ocean "1" *-- "1...*" Cellule
 
 Colonne "1" <-left-* "1" Coordonne
 
-Ocean -- Navire
 
 
 Partie "1" <-up-* "1" Difficulte
 
 Navire "1" *--> "1" TypeNavire
 
-MultiOutputStream -- Partie
+MultiOutputStream --- Partie
 
-Navire -- Alignement
+Navire "1" *--> "1" Alignement
 @enduml

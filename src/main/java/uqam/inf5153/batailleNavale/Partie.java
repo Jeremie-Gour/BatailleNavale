@@ -89,19 +89,13 @@ public class Partie {
                 }
             }
         }
-        // On affiche l'océan
-        System.out.println("Voici l'ocean de votre adversaire.");
-        oceanOrdinateur.afficherOceanMasque();
 
         // Boucle principale de jeu
         // Alterne de joueur en joueur jusqu'a temps qu'il y n'y a pas de gagnant
         boolean humainBombe = false;
         boolean ordinateurBombe = false;
         while (oceanHumain.resteDesNavires() && oceanOrdinateur.resteDesNavires()) {
-            System.out.println("ca c a toi");
-            oceanHumain.afficherOcean();
-            System.out.println("tire sur ca");
-            oceanOrdinateur.afficherOcean();
+            oceanOrdinateur.afficherOceanMasque();
 
             if (!humainBombe) {
                 Coordonnee coordonneeNavireHumain = Saisie.saisirTir();
