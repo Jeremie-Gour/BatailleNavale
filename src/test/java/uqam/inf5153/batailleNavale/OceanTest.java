@@ -101,11 +101,7 @@ class OceanTest {
     /**
      *  Vérifie un emplacement non-valide qui va dépasser les bordures.
      */
-    @Test
-    void verifierBateauTest2() {
-        Ocean oceanHumain = new Ocean();
-        assertFalse(oceanHumain.verifierBateau(new Coordonnee(9,0), Alignement.VERTICAL,new Navire(TypeNavire.PORTEAVIONS)));
-    }
+
 
     /**
      * Vérifie un emplacement non-valide qui est collé à un autre bateau
