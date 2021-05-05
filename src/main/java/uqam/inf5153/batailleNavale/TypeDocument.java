@@ -12,7 +12,7 @@ public enum TypeDocument {
     XML("sauvegarde.xml"),
     JSON("sauvegarde.json");
 
-    private String _typeDocument;
+    private final String _typeDocument;
 
     TypeDocument(String _typeDocument) {
         this._typeDocument = _typeDocument;
