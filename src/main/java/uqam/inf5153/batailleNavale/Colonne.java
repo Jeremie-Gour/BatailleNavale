@@ -31,7 +31,39 @@ public enum Colonne {
      * @return La valeur en int de la colonne.
      */
     public static int stringToColonne(char charColonne) {
-        Colonne colonne = Colonne.valueOf(Character.toString(charColonne));
+        Colonne colonne = null;
+        switch(charColonne) {
+            case 'A':
+                colonne = A;
+                break;
+            case 'B':
+                colonne = B;
+                break;
+            case 'C':
+                colonne = C;
+                break;
+            case 'D':
+                colonne = D;
+                break;
+            case 'E':
+                colonne = E;
+                break;
+            case 'F':
+                colonne = F;
+                break;
+            case 'G':
+                colonne = G;
+                break;
+            case 'H':
+                colonne = H;
+                break;
+            case 'I':
+                colonne = I;
+                break;
+            case 'J':
+                colonne = J;
+                break;
+        }
 
         return colonne.getColonne();
     }

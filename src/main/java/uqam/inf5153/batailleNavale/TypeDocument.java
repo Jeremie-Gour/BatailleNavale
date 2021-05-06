@@ -20,7 +20,7 @@ public enum TypeDocument {
 
     /**
      * Cette méthode pointe le output stream vers un document et sauvegarde la partie.
-     * @param typeDocument Le tyoe de document utilisé pour la sauvegarde.
+     * @param typeDocument Le type de document utilisé pour la sauvegarde.
      */
     public static void recording(TypeDocument typeDocument){
 
