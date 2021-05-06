@@ -34,11 +34,11 @@ public class Ordinateur {
 
     /**
      * Constructeur de l'ordinateur. Lorsque l'ordinateur est initialisé avec la difficulté INTERMEDIAIRE ou FACILE, coordonneesDisponibles
-     * sera construit avec tous les coordonnées d'une grille de bataille royale selon leur placementet sans répetition. Lorsque l'ordinateur
+     * sera construit avec tous les coordonnées d'une grille de bataille navale selon leur placementet sans répetition. Lorsque l'ordinateur
      * est initialisé avec la difficulté DIFFICILE, le constructeur va bâti un tableau et répéter les coordonnés selon la probiliteé qu'il a
      * un bateau par dessus.(Lire README pour plus d'explication sur la technique des probabilités)De plus,il instancie également
      * coordonneesDisponiblesIntelligent qui aura les coordonnées disponibles en forme d’échec et mat.(Lire README pour plus d'explications
-     * sur la technique de échec et mat dans battaille royale) Lorsque l'ordinateu est en difficile cherchera aléatoirement dans ses coordonnées
+     * sur la technique de échec et mat dans battaille navale) Lorsque l'ordinateu est en difficile cherchera aléatoirement dans ses coordonnées
      * disponibles, il fera sa recherche dans cette liste(coordonneesDisponiblesIntelligent). Si la liste devient vide, il cherchera dans la liste
      * coordonneesDisponibles.
      * This.strategie est initialisé à RECHERCHERBATEAU.
