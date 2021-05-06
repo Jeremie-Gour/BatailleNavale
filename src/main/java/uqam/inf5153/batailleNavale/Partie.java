@@ -34,7 +34,7 @@ public class Partie {
         boolean bombeValideHumain;
         boolean bombeValideOrdinateur;
 
-        oceanHumain.afficherOcean();
+        OceanAffichage.afficherOcean(oceanHumain);
 
 
 
@@ -52,7 +52,7 @@ public class Partie {
                 placeNavire = oceanHumain.verifierBateau(coordonneeNavire, alignementNavire, navire);
                 if(placeNavire){
                     oceanHumain.placerNavire(coordonneeNavire, alignementNavire, navire);
-                    oceanHumain.afficherOcean();
+                    OceanAffichage.afficherOcean(oceanHumain);
                 } else {
                     System.out.println(COORDONNEEINVALIDE);
                 }
@@ -72,7 +72,7 @@ public class Partie {
                 Coordonnee coordonneeBombe = Saisie.saisirBombe();
                 bombeValideHumain = oceanHumain.placerBombe(coordonneeBombe);
                 if (bombeValideHumain) {
-                    oceanHumain.afficherOcean();
+                    OceanAffichage.afficherOcean(oceanHumain);
                     i++;
                 } else {
                     System.out.println("Cet espace est occupé.");
@@ -95,7 +95,7 @@ public class Partie {
         boolean humainBombe = false;
         boolean ordinateurBombe = false;
         while (oceanHumain.resteDesNavires() && oceanOrdinateur.resteDesNavires()) {
-            oceanOrdinateur.afficherOceanMasque();
+            OceanAffichage.afficherOceanMasque(oceanOrdinateur);
 
             if (!humainBombe) {
                 Coordonnee coordonneeNavireHumain = Saisie.saisirTir();
@@ -107,7 +107,7 @@ public class Partie {
                     humainBombe = true;
                     System.out.println(BOMBETOUCHE);
                 }
-                oceanOrdinateur.afficherOceanMasque();
+                OceanAffichage.afficherOceanMasque(oceanOrdinateur);
             } else {
                 humainBombe = false;
 

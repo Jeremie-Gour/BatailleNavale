@@ -60,7 +60,10 @@ package BatailleNavale{
         +close()
     }
 
-
+   class OceanAffichage{
+               +void afficherOcean()
+                +void afficherOceanMasque()
+    }
     class Navire{
          +private typeNavire: TypeNavire
     }
@@ -70,14 +73,15 @@ package BatailleNavale{
             -{static} TAILLE_HORIZONTALE_MAX: Integer = 10
             #flotte: Flotte
             + ocean: Cellule[][]
-           +void afficherOcean()
-            +void afficherOceanMasque()
+
             +void placerNaviresAleatoirement()
             +boolean verifierBateau()
             +void placerNavire()
             +TypeCellule tirer(Coordonnee coordonnee)
             +boolean placerBombe(Coordonne coordonnee)
     }
+
+
 
     class Ordinateur{
         -{static} TAILLE_HORIZONTALE_MAX: Integer = 10
@@ -173,6 +177,7 @@ Strategie "1" <--* "1" Ordinateur
 Partie ..right..> "uses" Saisie
 
 Ordinateur <.."uses" Partie
+OceanAffichage <.. "uses" Ocean
 
 Partie "1" --o "2" Ocean
 

@@ -6,8 +6,8 @@ import java.util.Random;
  * Cette classe représente un océan sous la forme d'une matrice de jeu.
  */
 public class Ocean {
-    private static final int TAILLE_HORIZONTALE_MAX = 10;
-    private static final int TAILLE_VERTICALE_MAX = 10;
+    public static final int TAILLE_HORIZONTALE_MAX = 10;
+    public static final int TAILLE_VERTICALE_MAX = 10;
     protected Flotte flotte = new Flotte();
     private Cellule[][] ocean;
     private int cellulesDeNavireIntactes = calculerNombreTirsRestants();
@@ -30,50 +30,6 @@ public class Ocean {
             }
         }
     }
-
-    /**
-     * Affiche la grille de jeu.
-     */
-    public void afficherOcean() {
-        System.out.println();
-        for (int h = 0; h < TAILLE_HORIZONTALE_MAX; h++) {
-            System.out.print(h + " ");
-            System.out.print("| ");
-            for (int v = 0; v < TAILLE_VERTICALE_MAX; v++) {
-                System.out.print(ocean[h][v].typeCellule.getIcone() + " ");
-            }
-            System.out.print('|');
-            System.out.println();
-        }
-        System.out.print("    ");
-        for (int i = 0; i < 10; i++) {
-            System.out.print(Character.toString('A' + i) + " ");
-        }
-        System.out.println();
-    }
-
-    public void afficherOceanMasque() {
-        System.out.println();
-        for (int h = 0; h < TAILLE_HORIZONTALE_MAX; h++) {
-            System.out.print(h + " ");
-            System.out.print("| ");
-            for (int v = 0; v < TAILLE_VERTICALE_MAX; v++) {
-                if (ocean[h][v].typeCellule == TypeCellule.BOMBE || ocean[h][v].typeCellule == TypeCellule.NAVIREINTACT) {
-                    System.out.print(TypeCellule.EAU.getIcone() + " ");
-                } else {
-                    System.out.print(ocean[h][v].typeCellule.getIcone() + " ");
-                }
-            }
-            System.out.print('|');
-            System.out.println();
-        }
-        System.out.print("    ");
-        for (int i = 0; i < 10; i++) {
-            System.out.print(Character.toString('A' + i) + " ");
-        }
-        System.out.println();
-    }
-
 
     /**
      * Place tous les navires d'une flotte de façon aléatoire sur l'océan.

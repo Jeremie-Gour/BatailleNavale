@@ -38,7 +38,6 @@ class OceanTest {
             }
         }
     }
-
     /**
      * Vérifie l'affichage d'un océan.
      * (Test deux string différents car le output peut différer selon la machine)
@@ -67,9 +66,8 @@ class OceanTest {
                 "8 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
                 "9 | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ |\r\n" +
                 "    A B C D E F G H I J";
-        oceanHumain.afficherOcean();
-        assertTrue(outputSave.toString().trim().equals(test1) ||
-                outputSave.toString().trim().equals(test2));
+        OceanAffichage.afficherOcean(oceanHumain);
+        assertTrue(outputSave.toString().trim().equals(test2) || outputSave.toString().trim().equals(test1));
     }
 
     /**
