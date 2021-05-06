@@ -142,8 +142,8 @@ package BatailleNavale{
 }
 
 package Tests{
-class CelluleTest{
-}
+    class CelluleTest{
+    }
 
     class ColonneTest{
     }
@@ -154,7 +154,7 @@ class CelluleTest{
     class OrdinateurTest{
     }
 
-    class OrdinateurTest{
+    class TypeDocumentTest{
     }
 
     class SaisieTest{
