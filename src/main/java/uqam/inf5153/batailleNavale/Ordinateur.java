@@ -3,20 +3,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Cette classe s'occupe de placer les navires de l'ordinateur et de faire ses tirs.
+ */
 public class Ordinateur {
     private static final int TAILLE_HORIZONTALE_MAX = 10;
     private static final int TAILLE_VERTICALE_MAX = 10;
 
-//--------------cette section n'est juste lorsque la difficulté est innitialisé à zéro----------
+    // Cette section sert lorsque la difficulté est initialisé à zéro
     private static final int[] probabilite = {0,1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,6,6,6,6,7,7,7,8,8,9}; //utilisé la technique densité de probabilité(expliqué dans le README)
     static private int nbrChiffreEchecMat = (TAILLE_HORIZONTALE_MAX * TAILLE_VERTICALE_MAX)/2; //utilisé la technique échec et math(expliqué dans le README)
     private List<ArrayList<Coordonnee>> coordonneesDisponiblesIntelligent; //utilisé la technique échec et math(expliqué dans le README)
-    //------------------------------------------------------------------------------------------
 
-
-
-
-    //Les differents modes de stratégie selon lequels l'ordinateur choisira sa prochaine coordonné
+    // Les differents modes de stratégies selon lesquels l'ordinateur choisira sa prochaine coordonnée
     protected enum Strategie {
         RECHERCHERBATEAU, CHERCHERALIGNEMENT, SUIVREALIGNEMENT, VERIFIERAUTREBOUT
     }
@@ -34,12 +33,12 @@ public class Ordinateur {
 
     /**
      * Constructeur de l'ordinateur. Lorsque l'ordinateur est initialisé avec la difficulté INTERMEDIAIRE ou FACILE, coordonneesDisponibles
-     * sera construit avec tous les coordonnées d'une grille de bataille navale selon leur placementet sans répetition. Lorsque l'ordinateur
-     * est initialisé avec la difficulté DIFFICILE, le constructeur va bâti un tableau et répéter les coordonnés selon la probiliteé qu'il a
-     * un bateau par dessus.(Lire README pour plus d'explication sur la technique des probabilités)De plus,il instancie également
-     * coordonneesDisponiblesIntelligent qui aura les coordonnées disponibles en forme d’échec et mat.(Lire README pour plus d'explications
-     * sur la technique de échec et mat dans battaille navale) Lorsque l'ordinateu est en difficile cherchera aléatoirement dans ses coordonnées
-     * disponibles, il fera sa recherche dans cette liste(coordonneesDisponiblesIntelligent). Si la liste devient vide, il cherchera dans la liste
+     * sera construit avec toutes les coordonnées d'une grille de bataille navale selon leur placement et sans répetition. Lorsque l'ordinateur
+     * est initialisé avec la difficulté DIFFICILE, le constructeur va bâtir un tableau et répéter les coordonnés selon la probabilité qu'il y a
+     * un bateau par dessus(Lire README pour plus d'explication sur la technique des probabilités). De plus, il instancie également
+     * coordonneesDisponiblesIntelligent qui aura les coordonnées disponibles en forme d’échec et mat(Lire README pour plus d'explications
+     * sur la technique d'échec et mat dans bataille navale). Lorsque l'ordinateur est en difficile, il cherchera aléatoirement dans ses coordonnées
+     * disponibles et il fera sa recherche dans cette liste(coordonneesDisponiblesIntelligent). Si la liste devient vide, il cherchera dans la liste
      * coordonneesDisponibles.
      * This.strategie est initialisé à RECHERCHERBATEAU.
      *
@@ -49,7 +48,7 @@ public class Ordinateur {
         coordonneesDisponibles = new ArrayList<ArrayList<Coordonnee>>();
         this.difficulte = difficulte;
         if(difficulte == Difficulte.DIFFICILE){
-            //Dans cette section on instancie une deuxième grille (coordonneesPossiblesIntelligent) qui n'aura  que
+            // Dans cette section, on instancie une deuxième grille (coordonneesPossiblesIntelligent) qui n'aura que
             // les coordonnée qui respectent la technique échec et mat. De plus on reajoute plusieurs coordonnés dans les
             // 2 grilles selon la probalité de chaque coordonnée respectant la règle de densité de probabilité.
             coordonneesDisponiblesIntelligent = new ArrayList<ArrayList<Coordonnee>>();
@@ -111,7 +110,7 @@ public class Ordinateur {
      * Cette méthode sera la méthode utilisée à l'extérieur de la méthode pour retourner la prochaine coordonnée que
      * l'ordinateur voudrait attaquer. Dépendent de la difficulté initialisée, la méthode retournera la méthode appropriée
      * à sa difficulté et qui retournera à son tour la coordonnée proposée selon son algorithme et les coordonnées disponibles.
-     * @return coordonnée que l'ordinateur souhaite attaqué
+     * @return coordonnée que l'ordinateur souhaite attaqué.
      */
     public Coordonnee prochaineAttaque() {
         if ( this.difficulte == Difficulte.FACILE ) {
@@ -125,8 +124,8 @@ public class Ordinateur {
     /**
      * Cette méthode sera la méthode utilisée pour un ordinateur initialisé à facile à travers la
      * méthode prochaineAttaque(). Il ne fera que choisir une coordonnée aléatoirement, quelle que soit
-     * la situation de l'océan de l'opposant.
-     * @return coordonnée que l'ordinateur facile souhaite attaqur
+     * la situation de l'océan de l'adversaire.
+     * @return coordonnée que l'ordinateur facile souhaite attaquer.
      */
     private Coordonnee attaquerFacile() {
         return choisirCoordonneAleatoire();
@@ -162,9 +161,9 @@ public class Ordinateur {
     }
     /**
      * Cette méthode sera la méthode utilisée pour un ordinateur initialisé à difficile à travers la méthode prochaineAttaque().
-     * Dépendamment de la stratégie que l'ordinateur se retrouve au moment de l'appel de cette méthode, il utilisera la méthode adéquate
-     * pour proposer une coordonnée.De plus, avant de retourner la coordonnée, il le retire de la liste de coordonneesDisponibles et de
-     * la liste coordonneesDisponiblesIntelligent si la coordonnée y fait partie.
+     * Dépendamment de la stratégie de l'ordinateur au moment de l'appel de cette méthode, il utilisera la méthode adéquate
+     * pour proposer une coordonnée. De plus, avant de retourner la coordonnée, il la retire de la liste de coordonneesDisponibles et de
+     * la liste coordonneesDisponiblesIntelligent, si la coordonnée en fait partie.
      * @return coordonnée que l'ordinateur difficile souhaite attaquer.
      */
     private Coordonnee attaquerDifficile() {
@@ -191,9 +190,9 @@ public class Ordinateur {
     /**
      Cette méthode sera utilisée pour retourner des coordonnées basées sur une suite d'alignement(this.alignment) et de
      la dernière coordonnée attaquée(this.derniereCoordonneAttaque). Avant que cette méthode retourne une coordonnée, la
-     variable static "pas" est incrémenté. Ainsi, lorsque l'ordinateur va tenter d'attaquer l'autre bout de l'alignement,
+     variable static "pas" est incrémentée. Ainsi, lorsque l'ordinateur va tenter d'attaquer l'autre extrémité de l'alignement,
      il pourra reculer (dernière coordonnée - pas) dans la méthode suivreAlignementAutreBout(). Si la coordonnée n'est
-     pas disponible ou si la coordonnée proposée dépasserait la largeur ou la longueur de la grille, elle retourne la
+     pas disponible ou si la coordonnée proposée dépasse la largeur ou la longueur de la grille, elle retourne la
      méthode suivreAlignementAutreBout().
      * @return coordonnée que l'ordinateur souhaite attaquer.
      */
@@ -229,10 +228,10 @@ public class Ordinateur {
     }
     /**
      *  Cette méthode sera utilisée pour retourner des coordonnées basées sur une suite d'alignement(this.alignment) et de la dernière coordonnée
-     *  attaquée(this.derniereCoordonneAttaque) mais l'autre bout, après avoir attaqué toutes les coordonnées  dans l'autre sens à travers suivreAlignement().
+     *  attaquée(this.derniereCoordonneAttaque), mais à l'autre extrémité, après avoir attaqué toutes les coordonnées  dans l'autre sens à travers suivreAlignement().
      *  La première fois que cette méthode retourne une coordonnée, elle utilise la variable static "pas" pour trouver l'autre bout du bateau(dernière coordonnée - pas).
-     *  Ensuite, elle  initialise "pas" à 1 pour les prochaines utilisations pendant que this.strategie est VERIFIERAUTREBOUT. Aussi pour pouvoir l'incrémenter
-     *  plus tard pour des futurs utilsations lorsque this.strategie sera SUIVREALIGNEMENT. Si la coordonnée n'est pas disponible ou si la coordonnée proposée dépassait la
+     *  Ensuite, elle  initialise "pas" à 1 pour les prochaines utilisations, pendant que this.strategie est VERIFIERAUTREBOUT. Aussi, pour pouvoir l'incrémenter
+     *  plus tard pour des futurs utilisations lorsque this.strategie sera SUIVREALIGNEMENT. Si la coordonnée n'est pas disponible ou si la coordonnée proposée dépassait la
      *  largeur ou la longueur de la grille, elle retourne la méthode choisirCoordonneAleatoire() ou return choisirCoordonneAleatoireIntelligent().
      * @return coordonnée que l'ordinateur souhaite attaquer.
      */
@@ -269,7 +268,7 @@ public class Ordinateur {
 
 
     /**
-     *  Cette méthode sera utilisée pour trouver l'alignement d'un bateau qui vient d'être repérer. La variable static coordonnéPivot est innitialisé lorsque
+     *  Cette méthode sera utilisée pour trouver l'alignement d'un bateau qui vient d'être repérer. La variable static coordonnéPivot est initialisé lorsque
      *  le premier TypeCellule.NAVIREINTACT est repéré. Il attaquera en haut  de cette coordonnée la première fois qu'elle sera utilisée. En bas la deuxième fois, à droite
      *  la troisième fois et à gauche la deuxième fois. Si rien n’est trouvé, this.strategie est mis à RECHERCHERBATEAU et la méthode choisirCoordonneAleatoireIntelligent()
      *  ou choisirCoordonneAleatoire() est retourné.
@@ -317,7 +316,7 @@ public class Ordinateur {
     }
 
     /**
-     * Cette méthode sera utilisée pour proposer une coordonnée aléatoirement selon les coordonnées disponible dans la liste
+     * Cette méthode sera utilisée pour proposer une coordonnée aléatoirement, selon les coordonnées disponible dans la liste
      * coordonneesDisponibles.
      * @return coordonnée que l'ordinateur souhaite attaquer.
      */
@@ -333,8 +332,8 @@ public class Ordinateur {
         return coordonneeCible;
     }
     /**
-     * Cette méthode sera utilisée pour proposer une coordonnée aléatoirement selon les coordonnées disponible dans la liste this.coordonneesDisponibles
-     * et coordonneesDisponiblesIntelligent. Cette méthode dédié à l'ordinateur lorsqu'il sera à difficile. Ce qui différentie cette méthode
+     * Cette méthode sera utilisée pour proposer une coordonnée aléatoirement, selon les coordonnées disponible dans la liste this.coordonneesDisponibles
+     * et coordonneesDisponiblesIntelligent. Cette méthode est dédié à l'ordinateur lorsqu'il sera à difficile. Ce qui différencie cette méthode
      * de choisirCoordonneAleatoire() est qu'il propose les coordonnées de la liste coordonneesDisponiblesIntelligent jusqu'à tant qu'elle soit vide.
      * Ensuite, il propose à partir de coordonneesDisponibles. De plus, il choisit la rangée aléatoirement à partir des index dans le tableau static probabilité.
      */
@@ -366,16 +365,16 @@ public class Ordinateur {
 
 
     /**
-     * Cette méthode retourne vraie ou fausse si une coordonnée est dans la liste coordonneesDisponibles.
-     * @param coordonnee  la coordonnée qu'on voudrait vérifier s'il est dans la liste
-     * @return true s'il est dans la liste, retourn false s'il n'est pas dans la liste
+     * Cette méthode retourne vraie si une coordonnée est dans la liste coordonneesDisponibles.
+     * @param coordonnee  la coordonnée qu'on cherche dans la liste
+     * @return true s'il est dans la liste, return false s'il n'est pas dans la liste
      */
     private boolean coordonneEstDisponible(Coordonnee coordonnee){
         return this.coordonneesDisponibles.get(coordonnee.getRangee()).contains(coordonnee);
     }
     /**
      * Cette méthode retire une coordonnée de la liste coordonneesDisponibles.
-     * @param coordonnee  la coordonnée qu'on voudrait retirer s'il est dans la liste de coordonneDispobile
+     * @param coordonnee  la coordonnée qu'on voudrait retirer si elle n'est pas dans la liste des coordonneDisponible.
      */
     private void retirerCoordonne( Coordonnee coordonnee){
         int celluleRetireIndex = this.coordonneesDisponibles.get( coordonnee.getRangee() ).indexOf( coordonnee );
@@ -384,7 +383,7 @@ public class Ordinateur {
     }
     /**
      * Cette méthode retire une coordonnée de la liste coordonneesDisponibles et
-     * coordonneesDisponiblesIntelligent(s'il est la) pour l'ordinateur initialisé à Difficile.
+     * coordonneesDisponiblesIntelligent(si elle est là) pour l'ordinateur initialisé à Difficile.
      */
     private void retirerCoordonnePossibleIntelligent( Coordonnee coordonne ) {
         int celluleRetireIndex;
@@ -398,9 +397,9 @@ public class Ordinateur {
     }
 
     /**
-     * Cette méthode retire les voisins horizontal du coordonnée entrée dans les paramètres dans la liste coordonneesDisponibles et
-     * coordonneesDisponiblesIntelligent(s'il est la)
-     * @coordonnee qu'on veut retirer les voisins dans la liste des coordonnées disponibles
+     * Cette méthode retire les voisins horizontaux de la coordonnée entrée dans les paramètres qui sont dans la liste coordonneesDisponibles et
+     * coordonneesDisponiblesIntelligent(si elle est la).
+     * @coordonnee a qui on veut retirer les voisins dans la liste des coordonnées disponibles
      */
     private void retirerVosinageIntelligentHor( Coordonnee coordonnee ) {
         Coordonnee coordonneAlentour =  new Coordonnee( coordonnee.getRangee() , coordonnee.getColonne() );
@@ -415,9 +414,9 @@ public class Ordinateur {
 
     }
     /**
-     * Cette méthode retire les voisins vertical du coordonnée entrée dans les paramètres dans la liste coordonneesDisponibles et
-     * coordonneesDisponiblesIntelligent(s'il est la)
-     * @coordonnee qu'on veut retirer les voisins dans la liste des coordonnées disponibles
+     * Cette méthode retire les voisins verticaux de la coordonnée entrée dans les paramètres qui sont dans la liste coordonneesDisponibles et
+     * coordonneesDisponiblesIntelligent(si elle est la)
+     * @coordonnee a qui veut retirer les voisins dans la liste des coordonnées disponibles
      */
     private void retirerVosinageIntelligentVer( Coordonnee coordonnee ) {
         Coordonnee coordonneAlentour =  new Coordonnee( coordonnee.getRangee() , coordonnee.getColonne() );
@@ -433,8 +432,8 @@ public class Ordinateur {
     }
 
     /**
-     * Cette méthode est pour aviser à l'ordinateur quel type de cellule a été attaquée . Dépendamment, de la difficulté de l'ordinateur, il est redirigé
-     * à la méthode pour accomplir cette action selon la difficulté.
+     * Cette méthode est pour aviser à l'ordinateur le type de cellule qui a été attaquée. Dépendamment, de la difficulté de l'ordinateur, elle est redirigée
+     * vers la méthode pour accomplir cette action selon la difficulté.
      * @param celluleTouche le type de cellule qui à été dans la dernière attaque
      */
     public void recevoirResultat( TypeCellule celluleTouche ) {
@@ -445,9 +444,9 @@ public class Ordinateur {
         }
     }
     /**
-     * Cette méthode est pour aviser à l'ordinateur intermédiaire quel type de cellule a été attaquée. Dépendamment, de la cellule attaquée et
+     * Cette méthode est pour aviser l'ordinateur intermédiaire quel type de cellule a été attaquée. Dépendamment de la cellule attaquée et
      * this.strategie, il modifiera la stratégie si le type de cellule attaquée nécessite de le faire.
-     * @param celluleTouche le type de cellule qui à été touchée lors de la dernière attaque
+     * @param celluleTouche le type de cellule qui à été touchée lors de la dernière attaque.
      */
     private void recevoirResultatIntermediaire( TypeCellule celluleTouche ){
         if ( this.strategie == Strategie.RECHERCHERBATEAU ) {
@@ -471,9 +470,9 @@ public class Ordinateur {
 
     }
     /**
-     * Cette méthode est pour aviser à l'ordinateur difficile quel type de cellule a été attaquée. Dépendamment, de la cellule attaquée et this.stratégie,
-     * il modifiera la stratégie si le type de cellule attaquée nécessite de le faire. Ce qui différentie cette méthode de recevoirResultatIntermediaire()
-     * est que lorsque le type attaqué est NAVIREINTACT, il va retirer les cellules voisins selon alignementRepere puisque le jeu ne permet pas d'avoir des
+     * Cette méthode est pour aviser l'ordinateur difficile quel type de cellule a été attaquée. Dépendamment de la cellule attaquée et this.stratégie,
+     * il modifiera la stratégie si le type de cellule attaquée nécessite de le faire. Ce qui différencie cette méthode de recevoirResultatIntermediaire()
+     * est que lorsque le type attaqué est NAVIREINTACT, il va retirer les cellules voisines selon alignementRepere puisque le jeu ne permet pas d'avoir des
      * bateaux collés.
      * @param celluleTouche le type de cellule qui à été touchée lors de la dernière attaque
      */
