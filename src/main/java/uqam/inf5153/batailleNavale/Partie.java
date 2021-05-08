@@ -107,7 +107,6 @@ public class Partie {
                     humainBombe = true;
                     System.out.println(BOMBETOUCHE);
                 }
-                OceanAffichage.afficherOceanMasque(oceanOrdinateur);
             } else {
                 humainBombe = false;
 
